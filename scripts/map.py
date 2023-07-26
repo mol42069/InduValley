@@ -15,7 +15,7 @@ class Map:
 
         # we draw the player on the Surface "map"
 
-        self.map.blit(player.sprite, (player.pos[0] - (self.scale / 2), player.pos[1] - self.scale))
+        self.map.blit(player.sprite, (player.pos[enums.Cor.X.value] - (self.scale / 2), player.pos[enums.Cor.Y.value] - self.scale))
 
 
         # we define where top_left of the Surface "map" should be
