@@ -10,16 +10,17 @@ def main():
     while True:
 
         root.fill(grey)
-        keys_pressed = pg.key.get_pressed()
-        if keys_pressed[pg.K_ESCAPE]:
-            print("esc")
-            esc_menu()
 
         for event in pg.event.get():
             print(event.type)
             match event.type:
                 case pg.QUIT:
                     exit()
+
+                case pg.KEYDOWN:
+                    match event.key:
+                        case pg.K_ESCAPE:
+                            esc_menu()
 
 
         pg.display.update()
