@@ -21,7 +21,6 @@ def load(filename, map_name):
 
             for row in line:
                 l_data.append(row)
-                print(row)
 
             data.append(l_data)
     return data

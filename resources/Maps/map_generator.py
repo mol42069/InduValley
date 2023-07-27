@@ -64,6 +64,78 @@ class MapGen:
                     ["Dirt", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass",
                      "Dirt", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass",
                      "Grass", "Grass", "Dirt", "Stone", "Stone", "Stone", "Grass", "Dirt"],
+                    [
+                        "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Dirt", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Dirt", "Stone", "Stone", "Stone", "Grass", "Dirt", "Grass"],
+                    ["Dirt", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass",
+                     "Dirt", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass",
+                     "Grass", "Grass", "Dirt", "Stone", "Stone", "Stone", "Grass", "Dirt"],
+                    ["Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Dirt",
+                     "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass",
+                     "Grass", "Dirt", "Stone", "Stone", "Stone", "Grass", "Dirt", "Grass"],
+                    ["Dirt", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass",
+                     "Dirt", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass",
+                     "Grass", "Grass", "Dirt", "Stone", "Stone", "Stone", "Grass", "Dirt"],
+                    ["Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Dirt",
+                     "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass",
+                     "Grass", "Dirt", "Stone", "Stone", "Stone", "Grass", "Dirt", "Grass"],
+                    ["Dirt", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass",
+                     "Dirt", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass",
+                     "Grass", "Grass", "Dirt", "Stone", "Stone", "Stone", "Grass", "Dirt"],
+                    ["Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Dirt",
+                     "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass",
+                     "Grass", "Dirt", "Stone", "Stone", "Stone", "Grass", "Dirt", "Grass"],
+
+                    ["Dirt", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass",
+                     "Dirt", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass",
+                     "Grass", "Grass", "Dirt", "Stone", "Stone", "Stone", "Grass", "Dirt"],
+
+                    ["Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Dirt",
+                     "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass",
+                     "Grass", "Dirt", "Stone", "Stone", "Stone", "Grass", "Dirt", "Grass"],
+
+                    ["Dirt", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass",
+                     "Dirt", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass",
+                     "Grass", "Grass", "Dirt", "Stone", "Stone", "Stone", "Grass", "Dirt"],
+
+                    ["Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Dirt",
+                     "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass",
+                     "Grass", "Dirt", "Stone", "Stone", "Stone", "Grass", "Dirt", "Grass"],
+
+                    ["Dirt", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass",
+                     "Dirt", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass",
+                     "Grass", "Grass", "Dirt", "Stone", "Stone", "Stone", "Grass", "Dirt"],
+
+                    ["Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Dirt",
+                     "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass",
+                     "Grass", "Dirt", "Stone", "Stone", "Stone", "Grass", "Dirt", "Grass"],
+
+                    ["Dirt", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass",
+                     "Dirt", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass",
+                     "Grass", "Grass", "Dirt", "Stone", "Stone", "Stone", "Grass", "Dirt"],
+
+                    ["Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Dirt",
+                     "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass",
+                     "Grass", "Dirt", "Stone", "Stone", "Stone", "Grass", "Dirt", "Grass"],
+
+                    ["Dirt", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass",
+                     "Dirt", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass",
+                     "Grass", "Grass", "Dirt", "Stone", "Stone", "Stone", "Grass", "Dirt"],
+
+                    ["Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Dirt",
+                     "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass",
+                     "Grass", "Dirt", "Stone", "Stone", "Stone", "Grass", "Dirt", "Grass"],
+
+                    ["Dirt", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass",
+                     "Dirt", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass",
+                     "Grass", "Grass", "Dirt", "Stone", "Stone", "Stone", "Grass", "Dirt"],
+
+                    ["Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Dirt",
+                     "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass",
+                     "Grass", "Dirt", "Stone", "Stone", "Stone", "Grass", "Dirt", "Grass"],
+
+                    ["Dirt", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass",
+                     "Dirt", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass", "Grass",
+                     "Grass", "Grass", "Dirt", "Stone", "Stone", "Stone", "Grass", "Dirt"],
 
                     ]
 

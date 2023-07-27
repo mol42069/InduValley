@@ -23,20 +23,20 @@ def main():
     screen_size = (GetSystemMetrics(0), GetSystemMetrics(1))
     root = pg.display.set_mode(screen_size, pg.FULLSCREEN)
     pg.display.toggle_fullscreen()
-    sprite_loader = SaveMng(scale=scale, entity_scale=40, item_scale=10)
+    sprite_loader = SaveMng(scale=scale, entity_scale=80, item_scale=10)
     cur_map = Map(sprite_loader, starting_map, save_name, scale)
-    player = Player(cur_map.player_start_pos, screen_size)
+    player = Player(cur_map.player_start_pos, screen_size, sprite_loader)
 
     while True:
 
         root.fill(grey)
 
         root = cur_map.update(root, player, screen_size, scale=80)
+        pg.display.update()
 
 
 
         for event in pg.event.get():
-            print(event.type)
             match event.type:
                 case pg.QUIT:
                     exit()
@@ -64,16 +64,16 @@ def main():
             down = False
 
         if left:
-            player.move(-1, 0)
+            player.move(-3, 0)
         elif right:
-            player.move(1, 0)
+            player.move(3, 0)
         if up:
-            player.move(0, -1)
+            player.move(0, -3)
         elif down:
-            player.move(0, 1)
+            player.move(0, 3)
 
 
-        pg.display.update()
+
 
 
 

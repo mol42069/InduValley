@@ -1,9 +1,9 @@
-import pygame as pg
 
 class Player:
-    def __init__(self, pos, screen_size):
+    def __init__(self, pos, screen_size, sprite_loader):
         self.pos = pos
         self.screen_size = screen_size
+        self.sprite = sprite_loader.get_entity_sprite("Player")
         return
 
     def teleport(self, pos):
@@ -15,9 +15,9 @@ class Player:
         return
 
     def move(self, movement_x=0, movement_y=0):
-        if self.check_collision(movement_x, movement_y):
-            self.pos[0] += movement_x
-            self.pos[1] += movement_y
+        #if self.check_collision(movement_x, movement_y):
+        self.pos[0] += movement_x
+        self.pos[1] += movement_y
 
     def check_collision(self, movement_x, movement_y):         # add collision checks for stuff on the map
         if self.pos[0] + movement_x > self.screen_size[0] or self.pos[0] + movement_x < 0:
