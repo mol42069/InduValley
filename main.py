@@ -3,6 +3,7 @@ from win32api import GetSystemMetrics
 from resources.resource_loader import SaveMng
 from scripts.map import Map
 from scripts.player import Player
+from resources.Maps.map_generator import MapGen
 
 grey = (50, 50, 50)
 
@@ -15,20 +16,22 @@ def key_pressed(input_key):
 
 def main():
     starting_map = "Farm"
-    scale = 30
+    scale = 80
     save_name = "save1"
+    MapGen()
     pg.init()
     screen_size = (GetSystemMetrics(0), GetSystemMetrics(1))
     root = pg.display.set_mode(screen_size, pg.FULLSCREEN)
     pg.display.toggle_fullscreen()
     sprite_loader = SaveMng(scale=scale, entity_scale=40, item_scale=10)
     cur_map = Map(sprite_loader, starting_map, save_name, scale)
-    player = Player(cur_map.player_start_pos)
+    player = Player(cur_map.player_start_pos, screen_size)
 
     while True:
 
         root.fill(grey)
-        cur_map.draw(root, player, screen_size)
+
+        root = cur_map.update(root, player, screen_size, scale=80)
 
 
 
@@ -61,13 +64,13 @@ def main():
             down = False
 
         if left:
-            player.move(-0.2, 0)
+            player.move(-1, 0)
         elif right:
-            player.move(0.2, 0)
+            player.move(1, 0)
         if up:
-            player.move(0, -0.2)
+            player.move(0, -1)
         elif down:
-            player.move(0, 0.2)
+            player.move(0, 1)
 
 
         pg.display.update()

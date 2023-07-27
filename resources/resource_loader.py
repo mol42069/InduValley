@@ -1,5 +1,6 @@
 import pygame as pg
 import os
+from scripts import save
 class SaveMng:
     entity_sprites = {}
     environment_sprites = {}
@@ -9,13 +10,17 @@ class SaveMng:
 
     def __init__(self, scale, entity_scale, item_scale):
         self.entity_sprites = {}
+        self.entity_sprites_name =[]
         self.environment_sprites = {}
+        self.env_sprites_name = []
         self.item_sprites = {}
+        self.item_sprites_name = []
         self.bg_sprites = {}
+        self.bg_sprites_name = []
         self.maps = {}
-
+        self.load_maps(save_name='save1')
         self.load_entity(entity_scale)
-        self.load_items(item_scale)
+        #self.load_items(item_scale)
         self.load_environment(scale)
         self.load_background()
 
@@ -38,13 +43,14 @@ class SaveMng:
 
     def load_entity(self, scale):                     # scale is entity-scale
 
-        directory = os.listdir('./Entity')
+        directory = os.listdir('./resources/Entity')
 
         for filename in directory:
             if '.' in filename:
-                cur_sprite = pg.image.load('./Entity/' + filename)
+                cur_sprite = pg.image.load('./resources/Entity/' + filename)
                 cur_sprite = pg.transform.scale(cur_sprite, (scale, scale))
                 filename = filename[:-4]
+                self.entity_sprites_name.append(filename)
                 self.entity_sprites.update({filename : cur_sprite})
 
             else:
@@ -53,13 +59,14 @@ class SaveMng:
 
     def load_environment(self, scale):                # scale is environment-scale
 
-        directory = os.listdir('./Environment')
+        directory = os.listdir('./resources/Environment')
 
         for filename in directory:
             if '.' in filename:
-                cur_sprite = pg.image.load('./Environment/' + filename)
+                cur_sprite = pg.image.load('./resources/Environment/' + filename)
                 cur_sprite = pg.transform.scale(cur_sprite, (scale, scale))
                 filename = filename[:-4]
+                self.env_sprites_name.append(filename)
                 self.environment_sprites.update({filename : cur_sprite})
 
             else:
@@ -68,13 +75,14 @@ class SaveMng:
 
     def load_items(self, scale):                      # scale is items-scale
 
-        directory = os.listdir('./Items')
+        directory = os.listdir('./resources/Items')
 
         for filename in directory:
             if '.' in filename:
-                cur_sprite = pg.image.load('./Items/' + filename)
+                cur_sprite = pg.image.load('./resources/Items/' + filename)
                 cur_sprite = pg.transform.scale(cur_sprite, (scale, scale))
                 filename = filename[:-4]
+                self.item_sprites_name.append(filename)
                 self.item_sprites.update({filename : cur_sprite})
 
             else:
@@ -83,12 +91,13 @@ class SaveMng:
 
     def load_background(self):                     # scale is entity-scale
 
-        directory = os.listdir('./Background')
+        directory = os.listdir('./resources/Background')
 
         for filename in directory:
             if '.' in filename:
-                cur_sprite = pg.image.load('./Background/' + filename)
+                cur_sprite = pg.image.load('./resources/Background/' + filename)
                 filename = filename[:-4]
+                self.bg_sprites_name.append(filename)
                 self.bg_sprites.update({filename : cur_sprite})
 
             else:
@@ -98,6 +107,7 @@ class SaveMng:
     def load_maps(self, save_name):                            # we load map build
         path = "./Maps/" + save_name
                                                             # TODO: load a map after save map
+        self.maps.update({'Farm' : save.load("save1", "Farm")})
         return
 
     def create_save(self, save_name):                       # TODO: copy everything to the folder "save_name"

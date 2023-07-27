@@ -19,7 +19,7 @@ class Player:
             self.pos[0] += movement_x
             self.pos[1] += movement_y
 
-    def check_collision(self, movement_x, movement_y):
+    def check_collision(self, movement_x, movement_y):         # add collision checks for stuff on the map
         if self.pos[0] + movement_x > self.screen_size[0] or self.pos[0] + movement_x < 0:
             return False
 
