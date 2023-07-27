@@ -8,7 +8,7 @@ class SaveMng:
     bg_sprites = {}
     maps = {}
 
-    def __init__(self, scale, entity_scale, item_scale):
+    def __init__(self, scale, entity_scale, item_scale, save_name = 'save1'):
         self.entity_sprites = {}
         self.entity_sprites_name =[]
         self.environment_sprites = {}
@@ -18,9 +18,9 @@ class SaveMng:
         self.bg_sprites = {}
         self.bg_sprites_name = []
         self.maps = {}
-        self.load_maps(save_name='save1')
+        self.load_maps(save_name)
         self.load_entity(entity_scale)
-        #self.load_items(item_scale)
+        self.load_items(item_scale)
         self.load_environment(scale)
         self.load_background()
 

@@ -1,8 +1,9 @@
 
 class Player:
-    def __init__(self, pos, screen_size, sprite_loader):
+    def __init__(self, pos, screen_size, sprite_loader, mapx):
         self.pos = pos
         self.screen_size = screen_size
+        self.map = mapx
         self.sprite = sprite_loader.get_entity_sprite("Player")
         return
 
@@ -15,15 +16,15 @@ class Player:
         return
 
     def move(self, movement_x=0, movement_y=0):
-        #if self.check_collision(movement_x, movement_y):
-        self.pos[0] += movement_x
-        self.pos[1] += movement_y
+        if self.check_collision(movement_x, movement_y):
+            self.pos[0] += movement_x
+            self.pos[1] += movement_y
 
     def check_collision(self, movement_x, movement_y):         # add collision checks for stuff on the map
-        if self.pos[0] + movement_x > self.screen_size[0] or self.pos[0] + movement_x < 0:
+        if self.pos[0] + movement_x > self.map.map.get_width() - 29 or self.pos[0] + movement_x < 50:
             return False
 
-        elif self.pos[1] + movement_y > self.screen_size[1] or self.pos[1] + movement_y < 0:
+        elif self.pos[1] + movement_y > self.map.map.get_height() - 29 or self.pos[1] + movement_y < 80:
             return False
 
         else:

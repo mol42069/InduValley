@@ -2,19 +2,19 @@ import pygame as pg
 from scripts import enums
 class Map:
 
-    def __init__(self, sprite_loader, map_name, save_name, scale=80):
+    def __init__(self, sprite_loader, map_name, save_name, scale=50):
         self.map_lst = [[]]
         self.sprite_loader = sprite_loader
         self.map = None
-        self.load_map(map_name)
+        self.load_map(map_name, scale)
         self.build_map()
         self.save_name = save_name
         self.scale = scale
-        self.player_start_pos = [0, 0]
+        self.player_start_pos = [500, 500]
         self.pos = [0, 0]
         self.prev_pos = self.pos
 
-    def load_map(self, map_name, scale=80):
+    def load_map(self, map_name, scale=50):
         self.map_lst = self.sprite_loader.get_map(map_name)
         self.map = pg.Surface(((len(self.map_lst) - 1) * scale, len(self.map_lst[enums.Cor.X.value]) * scale))
         self.build_map()
@@ -36,7 +36,7 @@ class Map:
 
 
 
-    def draw(self, root, player, screen_size, scale=80):
+    def draw(self, root, player, screen_size, scale=50):
 
         # we draw the player on the Surface "map"
 
@@ -69,7 +69,7 @@ class Map:
         return root
 
 
-    def update(self, root, player, screen_size, scale=80):
+    def update(self, root, player, screen_size, scale=50):
            self.build_map(scale)
            root = self.draw(root, player, screen_size, scale)
            return root
