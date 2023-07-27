@@ -26,7 +26,7 @@ class SaveMng:
     def get_item_sprite(self, item_name = ""):
         return self.item_sprites[item_name]
 
-    def get_environment_sprite(self, env_name = ""):
+    def get_env_sprite(self, env_name = ""):
         return self.environment_sprites[env_name]
 
     def get_bg_sprite(self, bg_name = ""):
