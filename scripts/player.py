@@ -1,9 +1,9 @@
 import pygame as pg
 
 class Player:
-    def __init__(self, pos, ani):
+    def __init__(self, pos, screen_size):
         self.pos = pos
-        self.ani = ani
+        self.screen_size = screen_size
         return
 
     def teleport(self, pos):
@@ -14,10 +14,20 @@ class Player:
 
         return
 
-    def move(self):
+    def move(self, movement_x=0, movement_y=0):
+        if self.check_collision(movement_x, movement_y):
+            self.pos[0] += movement_x
+            self.pos[1] += movement_y
 
-        return
+    def check_collision(self, movement_x, movement_y):
+        if self.pos[0] + movement_x > self.screen_size[0] or self.pos[0] + movement_x < 0:
+            return False
 
+        elif self.pos[1] + movement_y > self.screen_size[1] or self.pos[1] + movement_y < 0:
+            return False
+
+        else:
+            return True
     def draw(self):
 
         return

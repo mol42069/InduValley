@@ -6,10 +6,11 @@ class Map:
         self.map_lst = [[]]
         self.sprite_loader = sprite_loader
         self.load_map(map_name)
-        self.map = pg.Surface(((len(self.map_lst) - 1) * scale, len(self.map_lst[enums.Cor.X.value]) * scale))
+        self.map = None
         self.build_map()
         self.save_name = save_name
         self.scale = scale
+        self.player_start_pos = [0, 0]
         self.pos = [0, 0]
 
     def load_map(self, map_name):
@@ -19,8 +20,11 @@ class Map:
         return
 
     def build_map(self):
-        bg = self.map_lst[-1].pop()
-        self.map.blit(self.sprite_loader.get_bg_sprite(bg[1]),(0, 0))
+        init = self.map_lst[-1].pop()
+        bg = init[1]
+        self.player_start_pos = init[2]
+        self.map.blit(self.sprite_loader.get_bg_sprite(bg, (self.map.get_width(), self.map.get_height())), (0, 0))
+
         for x, col in enumerate(self.map_lst):
             for y, row in enumerate(col):
                 self.map.blit(self.sprite_loader.get_env_sprite(row), (x * self.scale, y * self.scale))

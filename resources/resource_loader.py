@@ -7,7 +7,7 @@ class SaveMng:
     bg_sprites = {}
     maps = {}
 
-    def __init__(self, scale, entity_scale, item_scale, bg_scale):
+    def __init__(self, scale, entity_scale, item_scale):
         self.entity_sprites = {}
         self.environment_sprites = {}
         self.item_sprites = {}
@@ -17,7 +17,7 @@ class SaveMng:
         self.load_entity(entity_scale)
         self.load_items(item_scale)
         self.load_environment(scale)
-        self.load_background(bg_scale)
+        self.load_background()
 
 
     def get_entity_sprite(self, entity_name = ""):
@@ -29,8 +29,9 @@ class SaveMng:
     def get_env_sprite(self, env_name = ""):
         return self.environment_sprites[env_name]
 
-    def get_bg_sprite(self, bg_name = ""):
-        return self.bg_sprites[bg_name]
+    def get_bg_sprite(self, bg_name = "", scale = (2000, 3000)):
+        sprite = pg.transform.scale(self.bg_sprites[bg_name], (scale[0], scale[1]))
+        return sprite
 
     def get_map(self, map_name = ""):
         return self.maps[map_name]
@@ -80,14 +81,13 @@ class SaveMng:
                 print("ERROR: Item Filesystem is broken")
                 exit()
 
-    def load_background(self, scale):                     # scale is entity-scale
+    def load_background(self):                     # scale is entity-scale
 
         directory = os.listdir('./Background')
 
         for filename in directory:
             if '.' in filename:
                 cur_sprite = pg.image.load('./Background/' + filename)
-                cur_sprite = pg.transform.scale(cur_sprite, (scale, scale))
                 filename = filename[:-4]
                 self.bg_sprites.update({filename : cur_sprite})
 
