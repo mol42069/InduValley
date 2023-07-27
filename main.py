@@ -21,25 +21,24 @@ def key_pressed(input_key):
 def main():
     global running
     starting_map = "Farm"
-    scale = 80
-    target_fps = 53
+    scale = 50
+    target_fps = 144
     frame_t_time = 1000000000 / target_fps
     save_name = "save1"
-    # MapGen()
     pg.init()
+    ############################################################MapGen() # <---- generate the temporary "Farm" Layout
     screen_size = (GetSystemMetrics(0), GetSystemMetrics(1))
     root = pg.display.set_mode(screen_size, pg.FULLSCREEN)
     pg.display.toggle_fullscreen()
-    sprite_loader = SaveMng(scale=scale, entity_scale=80, item_scale=10)
+    sprite_loader = SaveMng(scale=scale, entity_scale=50, item_scale=10)
     cur_map = Map(sprite_loader, starting_map, save_name, scale)
     player = Player(cur_map.player_start_pos, screen_size, sprite_loader, cur_map)
     screen_thread = threading.Thread(target=screen_threading, args=(root,player, screen_size, scale, cur_map,))
     screen_thread.start()
+
     while running:
 
         pg.display.update()
-
-
 
         for event in pg.event.get():
             match event.type:
@@ -101,7 +100,6 @@ def esc_menu():
     global running
     running = False
     exit()                      # TODO: here we need to make an escape menu !
-
 
 if __name__ == "__main__":
     main()
