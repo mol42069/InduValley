@@ -51,6 +51,8 @@ def main():
                         case pg.K_ESCAPE:
                             esc_menu()
 
+
+
         if key_pressed(pg.K_d):
             right = True
         else:
