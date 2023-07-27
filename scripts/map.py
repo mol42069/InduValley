@@ -1,5 +1,7 @@
+import math
 import pygame as pg
 from scripts import enums
+
 class Map:
 
     def __init__(self, sprite_loader, map_name, save_name, scale=50):
@@ -52,7 +54,7 @@ class Map:
             self.pos[enums.Cor.X.value] = -(self.map.get_width() - screen_size[enums.Cor.X.value])
 
         else:
-            self.pos[enums.Cor.X.value] = -(player.pos[enums.Cor.X.value] - screen_size[enums.Cor.X.value] / 2)
+            self.pos[enums.Cor.X.value] = math.floor(-(player.pos[enums.Cor.X.value] - screen_size[enums.Cor.X.value] / 2))
 
 
         if player.pos[enums.Cor.Y.value] < screen_size[enums.Cor.Y.value] / 2:
@@ -62,7 +64,7 @@ class Map:
             self.pos[enums.Cor.Y.value] = -(self.map.get_height() - screen_size[enums.Cor.Y.value])
 
         else:
-            self.pos[enums.Cor.Y.value] = -(player.pos[enums.Cor.Y.value] - screen_size[enums.Cor.Y.value] / 2)
+            self.pos[enums.Cor.Y.value] = math.floor(-(player.pos[enums.Cor.Y.value] - screen_size[enums.Cor.Y.value] / 2))
 
         root.blit(self.map, self.pos)
 
