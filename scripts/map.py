@@ -1,15 +1,16 @@
 import math
-import pygame as pg
-from scripts import enums
 from scripts.block import *
+import pygame as pg
 
 class Map:
 
     def __init__(self, sprite_loader, map_name, save_name, scale=50):
+
         self.map_lst = [[]]
         self.map_tiles = [[]]
         self.sprite_loader = sprite_loader
         self.map = None
+
         self.load_map(map_name, scale)
         self.save_name = save_name
         self.scale = scale
@@ -18,24 +19,27 @@ class Map:
         self.prev_pos = self.pos
 
     def load_map(self, map_name, scale=50):
+
         self.map_lst = self.sprite_loader.get_map(map_name)
         self.map = pg.Surface(((len(self.map_lst) - 1) * scale, len(self.map_lst[enums.Cor.X.value]) * scale))
+
         self.build_map()
+
         return
 
     def build_map(self, scale=80):
+
         # init = self.map_lst[-1].pop()
         # bg = init[1]
         # self.player_start_pos = init[2]
         # self.map.blit(self.sprite_loader.get_bg_sprite(bg, (self.map.get_width(), self.map.get_height())), (0, 0))
 
         for x, col in enumerate(self.map_lst):
+
             col_tiles = []
+
             for y, row in enumerate(col):
-
-
                 sprite = self.sprite_loader.get_env_sprite(row[:-3])
-
                 t_or_nt = row[-2:]
 
                 if t_or_nt == "Ta":
@@ -56,7 +60,6 @@ class Map:
         # we draw the player on the Surface "map"
 
         self.map.blit(player.sprite, (player.pos[enums.Cor.X.value] - (scale / 2), player.pos[enums.Cor.Y.value] - scale))
-
 
         # we define where top_left of the Surface "map" should be
 

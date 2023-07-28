@@ -26,6 +26,7 @@ def main():
 
     save_name = "save1"
     pg.init()
+
     #MapGen() # <---- generate the temporary "Farm" Layout
 
     screen_size = (GetSystemMetrics(0), GetSystemMetrics(1))
@@ -53,8 +54,6 @@ def main():
                     match event.key:
                         case pg.K_ESCAPE:
                             esc_menu()
-
-
 
         if key_pressed(pg.K_d):
             right = True
@@ -87,13 +86,17 @@ def main():
 
 def screen_threading(root, player, screen_size, scale, cur_map):
     global running
+
     target_fps = 144
     frame_t_time = 1000000000 / target_fps
     s_time = time.time_ns()
+
     while running:
+
         frame_time = time.time_ns() - s_time
         if frame_time > frame_t_time:
             s_time = time.time_ns()
+
             cur_map.update(root, player, screen_size, scale)
 
         if frame_time != 0:
@@ -104,6 +107,7 @@ def screen_threading(root, player, screen_size, scale, cur_map):
 
 def esc_menu():
     global running
+
     running = False
     exit()                      # TODO: here we need to make an escape menu !
 
