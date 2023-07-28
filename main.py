@@ -73,13 +73,13 @@ def main():
             down = False
 
         if left:
-            player.move(-3, 0)
+            player.move(left, right, up, down, -3, 0)
         elif right:
-            player.move(3, 0)
+            player.move(left, right, up, down, 3, 0)
         if up:
-            player.move(0, -3)
+            player.move(left, right, up, down, 0, -3)
         elif down:
-            player.move(0, 3)
+            player.move(left, right, up, down, 0, 3)
 
 
 

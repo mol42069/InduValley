@@ -19,17 +19,24 @@ class SaveMng:
         self.bg_sprites = {}
         self.bg_sprites_name = []
         self.maps = {}
+        self.ani = {}
+        self.ani_name = []
 
         self.load_maps(save_name)
         self.load_entity(entity_scale)
         self.load_items(item_scale)
         self.load_environment(scale)
+        self.load_ani(entity_scale)
         self.load_background()
 
 
     def get_entity_sprite(self, entity_name = ""):
 
         return self.entity_sprites[entity_name]
+
+    def get_ani(self, name = ""):
+
+        return self.ani[name]
 
     def get_item_sprite(self, item_name = ""):
 
@@ -48,6 +55,36 @@ class SaveMng:
     def get_map(self, map_name = ""):
 
         return self.maps[map_name]
+
+    def load_ani(self, scale):
+
+        directory = os.listdir('./resources/Animations')
+
+        for filename in directory:
+
+            anim = []
+            filename_dir = os.listdir('./resources/Animations/' + filename)
+            for file in filename_dir:
+
+                state_anim = []
+                file_dir = os.listdir('./resources/Animations/' + filename + '/' + file)
+
+                for state in file_dir:
+
+                    try:
+
+                        cur_sprite = pg.image.load('./resources/Animations/' + filename + '/' + file + '/' + state)
+                        cur_sprite = pg.transform.scale(cur_sprite, (scale, scale * 2))
+                        state_anim.append(cur_sprite)
+
+                    except AttributeError:
+
+                        print("ERROR: Entity Filesystem is broken")
+                        exit()
+
+                anim.append(state_anim)
+
+            self.ani.update({filename : anim})
 
     def load_entity(self, scale):                     # scale is entity-scale
 

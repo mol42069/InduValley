@@ -14,3 +14,10 @@ class CropTimer(Enum):
     Wheat = 4
     Blueberry = 6
 
+class Direction(Enum):
+
+    UP = 3
+    DOWN = 0
+    RIGHT = 2
+    LEFT = 1
+
