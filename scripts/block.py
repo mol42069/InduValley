@@ -1,5 +1,6 @@
 from scripts import enums
-class Block:
+import pygame as pg
+class Tile:
 
     def __init__(self, sprite, pos):
         self.sprite = sprite
@@ -18,8 +19,14 @@ class Block:
             return True
         return False
 
+    def draw_t(self, surf, scale):
+        surf.blit(self.sprite, (self.pos[0] * scale, self.pos[1] * scale))
 
-class TillAble(Block):
+        return
+
+
+
+class TillAble(Tile):
 
     def __init__(self, sprite, pos):
         super().__init__(sprite, pos)
@@ -27,10 +34,15 @@ class TillAble(Block):
         self.crop_type = None
         self.grow_time = 0
         self.harvestable = False
+
     def till(self):
         self.tilled = True
 
         return
+
+    def draw_t(self, surf, scale):
+        surf = super().draw_t(surf, scale)
+        return surf
 
     def plant(self, crop_type):
         if self.crop_type is None:

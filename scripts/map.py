@@ -1,15 +1,16 @@
 import math
 import pygame as pg
 from scripts import enums
+from scripts.block import *
 
 class Map:
 
     def __init__(self, sprite_loader, map_name, save_name, scale=50):
         self.map_lst = [[]]
+        self.map_tiles = [[]]
         self.sprite_loader = sprite_loader
         self.map = None
         self.load_map(map_name, scale)
-        self.build_map()
         self.save_name = save_name
         self.scale = scale
         self.player_start_pos = [500, 500]
@@ -27,16 +28,28 @@ class Map:
         # bg = init[1]
         # self.player_start_pos = init[2]
         # self.map.blit(self.sprite_loader.get_bg_sprite(bg, (self.map.get_width(), self.map.get_height())), (0, 0))
-        self.map.fill((0, 0, 0))
+
         for x, col in enumerate(self.map_lst):
+            col_tiles = []
             for y, row in enumerate(col):
-                self.map.blit(self.sprite_loader.get_env_sprite(row), (x * scale, y * scale))
-
-        return
 
 
+                sprite = self.sprite_loader.get_env_sprite(row[:-3])
 
+                t_or_nt = row[-2:]
 
+                if t_or_nt == "Ta":
+                    tile = TillAble(sprite, (x, y))
+
+                elif t_or_nt == "nT":
+                    tile = Tile(sprite, (x, y))
+
+                else:
+                    tile = Tile(sprite,(x, y))
+
+                col_tiles.append(tile)
+
+            self.map_tiles.append(col_tiles)
 
     def draw(self, root, player, screen_size, scale=50):
 
@@ -72,6 +85,14 @@ class Map:
 
 
     def update(self, root, player, screen_size, scale=50):
-           self.build_map(scale)
-           root = self.draw(root, player, screen_size, scale)
-           return root
+
+        if self.map is not None:
+            self.map.fill((0, 10, 0))
+
+            for x, col in enumerate(self.map_tiles):
+                for y, row in enumerate(col):
+                    row.draw_t(self.map, scale)
+
+            root = self.draw(root, player, screen_size, scale)
+
+        return root

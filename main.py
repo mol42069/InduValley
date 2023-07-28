@@ -20,19 +20,22 @@ def key_pressed(input_key):
 
 def main():
     global running
+
     starting_map = "Farm"
     scale = 50
-    target_fps = 144
-    frame_t_time = 1000000000 / target_fps
+
     save_name = "save1"
     pg.init()
-    ############################################################MapGen() # <---- generate the temporary "Farm" Layout
+    #MapGen() # <---- generate the temporary "Farm" Layout
+
     screen_size = (GetSystemMetrics(0), GetSystemMetrics(1))
     root = pg.display.set_mode(screen_size, pg.FULLSCREEN)
-    pg.display.toggle_fullscreen()
+
     sprite_loader = SaveMng(scale=scale, entity_scale=50, item_scale=10)
+
     cur_map = Map(sprite_loader, starting_map, save_name, scale)
     player = Player(cur_map.player_start_pos, screen_size, sprite_loader, cur_map)
+
     screen_thread = threading.Thread(target=screen_threading, args=(root,player, screen_size, scale, cur_map,))
     screen_thread.start()
 
@@ -95,6 +98,7 @@ def screen_threading(root, player, screen_size, scale, cur_map):
 
         if frame_time != 0:
             print(math.floor(1000000000 / frame_time))
+            pass
 
 
 
