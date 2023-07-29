@@ -5,7 +5,7 @@ from win32api import GetSystemMetrics
 from resources.resource_loader import SaveMng
 from scripts.map import Map
 from scripts.player import Player
-from resources.Maps.map_generator import MapGen
+# from resources.Maps.map_generator import MapGen
 import time
 
 grey = (50, 50, 50)
@@ -54,6 +54,11 @@ def main():
                     match event.key:
                         case pg.K_ESCAPE:
                             esc_menu()
+                case pg.MOUSEBUTTONDOWN:
+                    if pg.mouse.get_pressed()[0]:
+                        print("mouse_pressed")
+                        mouse_pos = pg.mouse.get_pos()
+                        player.r_click(mouse_pos)
 
         if key_pressed(pg.K_d):
             right = True
@@ -100,7 +105,7 @@ def screen_threading(root, player, screen_size, scale, cur_map):
             cur_map.update(root, player, screen_size, scale)
 
         if frame_time != 0:
-            print(math.floor(1000000000 / frame_time))
+            #print(math.floor(1000000000 / frame_time))
             pass
 
 

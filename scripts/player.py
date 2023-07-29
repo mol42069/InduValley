@@ -1,5 +1,7 @@
+import math
 import time
 from scripts import enums
+import pygame
 
 class Player:
     def __init__(self, pos, screen_size, sprite_loader, mapx):
@@ -8,6 +10,7 @@ class Player:
         self.pos = pos
         self.screen_size = screen_size
         self.map = mapx
+        self.sprite_loader = sprite_loader
         self.ani_sprites = sprite_loader.get_ani("Player")
         self.sprite = sprite_loader.get_entity_sprite("Player")
         self.s_time = time.time()
@@ -70,6 +73,30 @@ class Player:
     def draw(self):
 
         return
+
+    def r_click(self, pos):
+
+        p_on_t = [math.floor(pos[0] / 30), math.floor(pos[1] / 30)]
+
+        temp_col = self.map.map_tiles[ :(p_on_t[0] + 3)]
+        temp_col = temp_col[(p_on_t[0] - 3): ]
+        temp_tiles = [[]]
+        for col in temp_col:
+
+            temp_row = col[:(p_on_t[1] + 3) ]
+            temp_row = temp_row[(p_on_t[1] - 3):]
+            temp_tiles.append(temp_row)
+
+
+        for col in temp_tiles:
+            for row in col:
+                if row.rect.collidepoint((pos[0], pos[1]/30)):
+                    print(row.pos)
+                    row.sprite = self.sprite_loader.get_env_sprite("Stone")
+
+
+
+
 
     def update_inv(self):
 

@@ -23,11 +23,11 @@ class Map:
         self.map_lst = self.sprite_loader.get_map(map_name)
         self.map = pg.Surface(((len(self.map_lst) - 1) * scale, len(self.map_lst[enums.Cor.X.value]) * scale))
 
-        self.build_map()
+        self.build_map(scale)
 
         return
 
-    def build_map(self, scale=80):
+    def build_map(self, scale=50):
 
         # init = self.map_lst[-1].pop()
         # bg = init[1]
@@ -43,7 +43,7 @@ class Map:
                 t_or_nt = row[-2:]
 
                 if t_or_nt == "Ta":
-                    tile = TillAble(sprite, (x, y))
+                    tile = TillAble(sprite, (x * scale,y * scale))
 
                 elif t_or_nt == "nT":
                     tile = Tile(sprite, (x, y))
@@ -94,7 +94,7 @@ class Map:
 
             for x, col in enumerate(self.map_tiles):
                 for y, row in enumerate(col):
-                    row.draw_t(self.map, scale)
+                    row.draw_t(self.map)
 
             root = self.draw(root, player, screen_size, scale)
 

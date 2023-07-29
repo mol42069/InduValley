@@ -24,9 +24,8 @@ class Tile:
 
         return False
 
-    def draw_t(self, surf, scale):
-
-        surf.blit(self.sprite, (self.pos[0] * scale, self.pos[1] * scale))
+    def draw_t(self, surf):
+        surf.blit(self.sprite, (self.pos[0], self.pos[1]))
 
         return
 
@@ -49,9 +48,9 @@ class TillAble(Tile):
 
         return
 
-    def draw_t(self, surf, scale):
+    def draw_t(self, surf):
 
-        surf = super().draw_t(surf, scale)
+        surf = super().draw_t(surf)
 
         return surf
 
