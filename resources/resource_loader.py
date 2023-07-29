@@ -93,7 +93,7 @@ class SaveMng:
         for filename in directory:
             if '.' in filename:
                 cur_sprite = pg.image.load('./resources/Entity/' + filename)
-                cur_sprite = pg.transform.scale(cur_sprite, (scale, scale))
+                cur_sprite = pg.transform.scale(cur_sprite, (scale, scale * 2))
                 filename = filename[:-4]
                 self.entity_sprites_name.append(filename)
                 self.entity_sprites.update({filename : cur_sprite})

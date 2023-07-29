@@ -26,7 +26,7 @@ class Player:
 
     def animation(self):
 
-        if self.s_time + 0.1 < time.time():
+        if self.s_time + 0.06 < time.time():            # The float value here changes the animation speed
             self.s_time = time.time()
             self.ani_counter += 1
 
@@ -74,29 +74,32 @@ class Player:
 
         return
 
-    def r_click(self, pos):
+    def r_click(self, pos, scale):
 
-        p_on_t = [math.floor(pos[0] / 30), math.floor(pos[1] / 30)]
+        pos[0] -= self.map.pos[0]
+        pos[1] -= self.map.pos[1]
+
+        p_pos = (self.pos[0] + 25, self.pos[1] + 45)
+
+        p_on_t = [math.floor(p_pos[0] / scale), math.floor(p_pos[1] / scale)]
 
         temp_col = self.map.map_tiles[ :(p_on_t[0] + 3)]
-        temp_col = temp_col[(p_on_t[0] - 3): ]
-        temp_tiles = [[]]
+        temp_col = temp_col[(p_on_t[0]): ]
+        temp_tiles = []
+
         for col in temp_col:
 
-            temp_row = col[:(p_on_t[1] + 3) ]
-            temp_row = temp_row[(p_on_t[1] - 3):]
+            temp_row = col[ :(p_on_t[1] + 2)]
+            temp_row = temp_row[(p_on_t[1] - 1):]
             temp_tiles.append(temp_row)
 
+        print(self.pos)
 
         for col in temp_tiles:
             for row in col:
-                if row.rect.collidepoint((pos[0], pos[1]/30)):
-                    print(row.pos)
+                print(row.pos)
+                if row.rect.collidepoint((pos[0], pos[1])):
                     row.sprite = self.sprite_loader.get_env_sprite("Stone")
-
-
-
-
 
     def update_inv(self):
 

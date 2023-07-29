@@ -58,7 +58,11 @@ def main():
                     if pg.mouse.get_pressed()[0]:
                         print("mouse_pressed")
                         mouse_pos = pg.mouse.get_pos()
-                        player.r_click(mouse_pos)
+                        m_pos = [mouse_pos[0], mouse_pos[1]]
+                        player.r_click(m_pos, scale)
+
+                case pg.MOUSEBUTTONUP:
+                    pass
 
         if key_pressed(pg.K_d):
             right = True
@@ -85,6 +89,10 @@ def main():
             player.move(left, right, up, down, 0, -3)
         elif down:
             player.move(left, right, up, down, 0, 3)
+
+        if not right and not left and not up and not down:
+            player.sprite = player.ani_sprites[player.direction][3]
+            player.ani_counter = 3
 
 
 

@@ -46,10 +46,10 @@ class Map:
                     tile = TillAble(sprite, (x * scale,y * scale))
 
                 elif t_or_nt == "nT":
-                    tile = Tile(sprite, (x, y))
+                    tile = Tile(sprite, (x * scale,y * scale))
 
                 else:
-                    tile = Tile(sprite,(x, y))
+                    tile = Tile(sprite,(x * scale,y * scale))
 
                 col_tiles.append(tile)
 
