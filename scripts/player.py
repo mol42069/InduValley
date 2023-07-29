@@ -79,7 +79,7 @@ class Player:
         pos[0] -= self.map.pos[0]
         pos[1] -= self.map.pos[1]
 
-        p_pos = (self.pos[0] + 25, self.pos[1] + 45)
+        p_pos = (self.pos[0] + 25, self.pos[1] + 35)
 
         p_on_t = [math.floor(p_pos[0] / scale), math.floor(p_pos[1] / scale)]
 
@@ -93,11 +93,9 @@ class Player:
             temp_row = temp_row[(p_on_t[1] - 1):]
             temp_tiles.append(temp_row)
 
-        print(self.pos)
 
         for col in temp_tiles:
             for row in col:
-                print(row.pos)
                 if row.rect.collidepoint((pos[0], pos[1])):
                     row.sprite = self.sprite_loader.get_env_sprite("Stone")
 

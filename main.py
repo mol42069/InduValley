@@ -54,9 +54,9 @@ def main():
                     match event.key:
                         case pg.K_ESCAPE:
                             esc_menu()
+
                 case pg.MOUSEBUTTONDOWN:
                     if pg.mouse.get_pressed()[2]:
-                        print("mouse_pressed")
                         mouse_pos = pg.mouse.get_pos()
                         m_pos = [mouse_pos[0], mouse_pos[1]]
                         player.r_click(m_pos, scale)
@@ -113,7 +113,7 @@ def screen_threading(root, player, screen_size, scale, cur_map):
             cur_map.update(root, player, screen_size, scale)
 
         if frame_time != 0:
-            #print(math.floor(1000000000 / frame_time))
+            print(math.floor(1000000000 / frame_time))
             pass
 
 
