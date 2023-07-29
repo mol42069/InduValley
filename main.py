@@ -55,7 +55,7 @@ def main():
                         case pg.K_ESCAPE:
                             esc_menu()
                 case pg.MOUSEBUTTONDOWN:
-                    if pg.mouse.get_pressed()[0]:
+                    if pg.mouse.get_pressed()[2]:
                         print("mouse_pressed")
                         mouse_pos = pg.mouse.get_pos()
                         m_pos = [mouse_pos[0], mouse_pos[1]]
