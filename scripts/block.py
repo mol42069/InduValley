@@ -1,12 +1,14 @@
 from scripts import enums
 class Tile:
 
-    def __init__(self, sprite, pos):
+    def __init__(self, sprite, pos, type):
 
         self.sprite = sprite
         self.pos = pos
         self.rect = self.sprite.get_rect()
         self.rect.topleft = self.pos
+        self.tillable = False
+        self.type = type
 
 
     def draw(self, root):
@@ -33,10 +35,10 @@ class Tile:
 
 class TillAble(Tile):
 
-    def __init__(self, sprite, pos):
+    def __init__(self, sprite, pos, type):
 
-        super().__init__(sprite, pos)
-
+        super().__init__(sprite, pos, type)
+        self.tillable = True
         self.tilled = False
         self.crop_type = None
         self.grow_time = 0

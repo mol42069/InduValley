@@ -60,6 +60,10 @@ def main():
                         mouse_pos = pg.mouse.get_pos()
                         m_pos = [mouse_pos[0], mouse_pos[1]]
                         player.r_click(m_pos, scale)
+                    elif pg.mouse.get_pressed()[0]:
+                        mouse_pos = pg.mouse.get_pos()
+                        m_pos = [mouse_pos[0], mouse_pos[1]]
+                        player.l_click(m_pos, scale)
 
                 case pg.MOUSEBUTTONUP:
                     pass

@@ -1,6 +1,7 @@
 import math
 from scripts.block import *
 import pygame as pg
+from scripts.Items.inventory import *
 
 class Map:
 
@@ -17,6 +18,20 @@ class Map:
         self.player_start_pos = [500, 500]
         self.pos = [0, 0]
         self.prev_pos = self.pos
+        self.hot_bar = [None, None, None, None, None, None, None, None, None, None]
+        for i in range(0, 10):
+            if i % 3 == 0:
+                sprite = sprite_loader.get_env_sprite("Dirt")
+            elif i % 3 == 1:
+                sprite = sprite_loader.get_env_sprite("Stone")
+            else:
+                sprite = sprite_loader.get_env_sprite("Grass")
+
+            self.hot_bar[i] = InvTiles(sprite_loader, sprite, "Ta", 99)
+
+        self.inventory = []
+        self.hot_surf = sprite_loader.get_bg_sprite("HotBar", (550, 50))
+        self.hot_pos = (685, 1030)
 
     def load_map(self, map_name, scale=50):
 
@@ -43,13 +58,13 @@ class Map:
                 t_or_nt = row[-2:]
 
                 if t_or_nt == "Ta":
-                    tile = TillAble(sprite, (x * scale,y * scale))
+                    tile = TillAble(sprite, (x * scale,y * scale), row[:-3])
 
                 elif t_or_nt == "nT":
-                    tile = Tile(sprite, (x * scale,y * scale))
+                    tile = Tile(sprite, (x * scale,y * scale), row[:-3])
 
                 else:
-                    tile = Tile(sprite,(x * scale,y * scale))
+                    tile = Tile(sprite,(x * scale,y * scale), row[:-3])
 
                 col_tiles.append(tile)
 
@@ -82,7 +97,12 @@ class Map:
         else:
             self.pos[enums.Cor.Y.value] = math.floor(-(player.pos[enums.Cor.Y.value] - screen_size[enums.Cor.Y.value] / 2))
 
+        self.hot_bar_mng()
+
         root.blit(self.map, self.pos)
+        root.blit(self.hot_surf, self.hot_pos)
+        #pg.display.update()
+
 
         return root
 
@@ -99,3 +119,18 @@ class Map:
             root = self.draw(root, player, screen_size, scale)
 
         return root
+
+    def inv_manager(self, scale):
+
+
+        return
+
+    def hot_bar_mng(self):
+
+        self.hot_surf = self.sprite_loader.get_bg_sprite("HotBar", (550, 50))
+
+        for i in range(0, 10):
+            if self.hot_bar[i] is not None:
+                self.hot_surf.blit(self.hot_bar[i].sprite, ((2 + (50 * i) + (5 * (i - 1))), 2))
+
+        pass
