@@ -5,6 +5,7 @@ from win32api import GetSystemMetrics
 from resources.resource_loader import SaveMng
 from scripts.map import Map
 from scripts.player import Player
+from scripts import enums
 # from resources.Maps.map_generator import MapGen
 import time
 
@@ -23,7 +24,7 @@ def main():
 
     starting_map = "Farm"
     scale = 50
-
+    entity_scale = 50
     save_name = "save1"
     pg.init()
 
@@ -41,6 +42,9 @@ def main():
     screen_thread.start()
 
     while running:
+        cur_map.map.blit(player.sprite, (player.pos[enums.Cor.X.value], player.pos[enums.Cor.Y.value] - entity_scale))
+        root.blit(cur_map.map, cur_map.pos)
+        root.blit(cur_map.hot_surf, cur_map.hot_pos)
 
         pg.display.update()
 

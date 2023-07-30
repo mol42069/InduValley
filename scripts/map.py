@@ -74,7 +74,7 @@ class Map:
 
         # we draw the player on the Surface "map"
 
-        self.map.blit(player.sprite, (player.pos[enums.Cor.X.value] - (scale / 2), player.pos[enums.Cor.Y.value] - scale))
+        #self.map.blit(player.sprite, (player.pos[enums.Cor.X.value] - (scale / 2), player.pos[enums.Cor.Y.value] - scale))
 
         # we define where top_left of the Surface "map" should be
 
@@ -99,8 +99,8 @@ class Map:
 
         self.hot_bar_mng()
 
-        root.blit(self.map, self.pos)
-        root.blit(self.hot_surf, self.hot_pos)
+        # root.blit(self.map, self.pos)
+        # root.blit(self.hot_surf, self.hot_pos)
         #pg.display.update()
 
 
@@ -110,8 +110,6 @@ class Map:
     def update(self, root, player, screen_size, scale=50):
 
         if self.map is not None:
-            self.map.fill((0, 10, 0))
-
             for x, col in enumerate(self.map_tiles):
                 for y, row in enumerate(col):
                     row.draw_t(self.map)
