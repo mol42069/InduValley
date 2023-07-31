@@ -103,6 +103,9 @@ class HotBar(Inventory):
 
     def update(self):
         for x, hot_tile in enumerate(self.hot_bar):
+            hot_tile.amount = int(self.items[0][x][-3:])
+            hot_tile.type = str(self.items[0][x][:-4])
+
             if hot_tile.amount == 0:
                 hot_tile.type = None
                 self.items[0][x] = "None:000"
@@ -117,3 +120,12 @@ class HotBar(Inventory):
 
     def item_used(self):
         self.hot_bar[self.selected].amount -= 1
+        if int(self.hot_bar[self.selected].amount) > 99:
+            self.items[0][self.selected] = self.items[0][self.selected][:-3] + str(self.hot_bar[self.selected].amount)
+
+        elif int(self.hot_bar[self.selected].amount) > 9:
+            self.items[0][self.selected] = self.items[0][self.selected][:-3] + "0" + str(self.hot_bar[self.selected].amount)
+
+        else:
+            self.items[0][self.selected] = self.items[0][self.selected][:-3] + "00" + str(self.hot_bar[self.selected].amount)
+
