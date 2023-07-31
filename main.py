@@ -42,8 +42,10 @@ def main():
     screen_thread.start()
 
     while running:
+
         cur_map.map.blit(player.sprite, (player.pos[enums.Cor.X.value], player.pos[enums.Cor.Y.value] - entity_scale))
         root.blit(cur_map.map, cur_map.pos)
+
         root.blit(cur_map.hot_surf, cur_map.hot_pos)
 
         pg.display.update()
@@ -61,10 +63,13 @@ def main():
 
                 case pg.MOUSEBUTTONDOWN:
                     if pg.mouse.get_pressed()[2]:
+
                         mouse_pos = pg.mouse.get_pos()
                         m_pos = [mouse_pos[0], mouse_pos[1]]
                         player.r_click(m_pos, scale)
+
                     elif pg.mouse.get_pressed()[0]:
+
                         mouse_pos = pg.mouse.get_pos()
                         m_pos = [mouse_pos[0], mouse_pos[1]]
                         player.l_click(m_pos, scale)

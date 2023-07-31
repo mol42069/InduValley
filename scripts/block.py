@@ -1,4 +1,5 @@
 from scripts import enums
+import pygame as pg
 class Tile:
 
     def __init__(self, sprite, pos, type):
@@ -6,14 +7,16 @@ class Tile:
         self.sprite = sprite
         self.pos = pos
         self.rect = self.sprite.get_rect()
-        self.rect.topleft = self.pos
+        self.surf = pg.Surface((self.rect.width, self.rect.height))
+        self.surf.blit(self.sprite,(0, 0))
+        self.rect.topleft = pos
         self.tillable = False
         self.type = type
 
 
     def draw(self, root):
 
-        root.blit(self.sprite, self.pos)
+        root.blit(self.surf, self.pos)
 
         return root
 
@@ -27,7 +30,7 @@ class Tile:
         return False
 
     def draw_t(self, surf):
-        surf.blit(self.sprite, (self.pos[0], self.pos[1]))
+        surf.blit(self.surf, (self.pos[0], self.pos[1]))
 
         return
 

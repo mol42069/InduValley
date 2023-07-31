@@ -97,7 +97,8 @@ class Player:
             for row in col:
                 if row.rect.collidepoint((pos[0], pos[1])):
                     if row.tillable:
-                        row.sprite = self.sprite_loader.get_env_sprite("Stone")
+                        row.surf.blit(self.sprite_loader.get_env_sprite("Stone"), (0, 0))
+                        row.type = "Stone"
 
     def l_click(self, pos, scale):
 
@@ -123,7 +124,9 @@ class Player:
             for row in col:
                 if row.rect.collidepoint((pos[0], pos[1])):
                     if row.tillable:
-                        row.sprite = self.sprite_loader.get_env_sprite("Dirt")
+
+                        row.surf.blit(self.sprite_loader.get_env_sprite("Dirt"), (0,0))
+                        row.type = "Dirt"
 
     def update_inv(self):
 

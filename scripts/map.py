@@ -32,6 +32,10 @@ class Map:
         self.inventory = []
         self.hot_surf = sprite_loader.get_bg_sprite("HotBar", (550, 50))
         self.hot_pos = (685, 1030)
+        self.last_hover = None
+        self.hover_pos = [0, 0]
+
+        self.reachable = None
 
     def load_map(self, map_name, scale=50):
 
@@ -103,11 +107,27 @@ class Map:
         # root.blit(self.hot_surf, self.hot_pos)
         #pg.display.update()
 
-
         return root
 
 
     def update(self, root, player, screen_size, scale=50):
+
+        m_pos = pg.mouse.get_pos()
+
+        self.hover_pos = [math.ceil((m_pos[0] - self.pos[0]) / scale), math.floor((m_pos[1] - self.pos[1]) / scale)]
+        #print(self.hover_pos)
+
+        try:
+            if self.last_hover is not None:
+                self.map_tiles[self.last_hover[0]][self.last_hover[1]].surf.blit(self.sprite_loader.get_env_sprite(self.map_tiles[self.last_hover[0]][self.last_hover[1]].type), (0, 0))
+                self.last_hover = None
+
+            self.map_tiles[self.hover_pos[0]][self.hover_pos[1]].surf.blit(self.sprite_loader.get_env_sprite("Hover"), (0, 0))
+
+            self.last_hover = self.hover_pos
+
+        except IndexError:
+            pass
 
         if self.map is not None:
             for x, col in enumerate(self.map_tiles):
@@ -129,6 +149,6 @@ class Map:
 
         for i in range(0, 10):
             if self.hot_bar[i] is not None:
-                self.hot_surf.blit(self.hot_bar[i].sprite, ((2 + (50 * i) + (5 * (i - 1))), 2))
+                self.hot_surf.blit(self.hot_bar[i].sprite, ((10 + (50 * i) + (4 * (i - 1))), 4))
 
         pass
