@@ -3,7 +3,7 @@ import time
 from scripts import enums
 
 class Player:
-    def __init__(self, pos, screen_size, sprite_loader, map_x):
+    def __init__(self, pos, screen_size, sprite_loader, map_x, hot_bar):
 
         self.ani_counter = 0
         self.pos = pos
@@ -14,6 +14,7 @@ class Player:
         self.sprite = sprite_loader.get_entity_sprite("Player")
         self.s_time = time.time()
         self.direction = enums.Direction.RIGHT.value
+        self.hot_bar = hot_bar
 
         return
 
@@ -124,9 +125,12 @@ class Player:
             for row in col:
                 if row.rect.collidepoint((pos[0], pos[1])):
                     if row.tillable:
-
-                        row.surf.blit(self.sprite_loader.get_env_sprite("Dirt"), (0,0))
-                        row.type = "Dirt"
+                        sprite = self.hot_bar.get_item()
+                        if sprite is not None:
+                            if row.type != sprite:
+                                row.surf.blit(self.sprite_loader.get_env_sprite(sprite), (0, 0))
+                                row.type = sprite
+                                self.hot_bar.item_used()
 
     def update_inv(self):
 

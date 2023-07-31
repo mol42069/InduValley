@@ -62,12 +62,12 @@ class Inventory:
 
 class HotBar(Inventory):
 
-    def __init__(self, sprite_loader, scale, hot_pos):
+    def __init__(self, sprite_loader, scale, hot_pos, hot_size):
         super().__init__(sprite_loader, scale)
-
+        self.hot_size = hot_size
         self.hot_bar = [None, None, None, None, None, None, None, None, None, None]
         self.hot_pos = hot_pos
-        self.sprite = sprite_loader.get_bg_sprite("HotBar", (505, 56))
+        self.sprite = sprite_loader.get_bg_sprite("HotBar", self.hot_size)
         self.surf = pg.Surface((self.sprite.get_width(), self.sprite.get_height()))
 
         for i in range(0, 10):
@@ -75,6 +75,8 @@ class HotBar(Inventory):
                 t_type = self.items[0][i]
                 amount = int(t_type[-3:])
                 t_type = t_type[:-4]
+                if t_type == "None":
+                    t_type = None
 
                 i_pos = [3 + (i * self.scale), 3]
 
@@ -103,9 +105,15 @@ class HotBar(Inventory):
         for x, hot_tile in enumerate(self.hot_bar):
             if hot_tile.amount == 0:
                 hot_tile.type = None
-                self.items[0][x] = None
+                self.items[0][x] = "None:000"
 
             hot_tile.update(self.surf)
 
     def draw(self, surface):
         surface.blit(self.surf, self.hot_pos)
+
+    def get_item(self):
+        return self.hot_bar[self.selected].type
+
+    def item_used(self):
+        self.hot_bar[self.selected].amount -= 1

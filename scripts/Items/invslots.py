@@ -13,6 +13,9 @@ class InvSlot:
         self.amount = amount
         self.type = t_type
 
+        self.font = pg.font.SysFont("arial", 15)
+        self.font.bold = True
+
     def change(self, t_type, amount):
         self.type = t_type
         self.amount = amount
@@ -53,10 +56,16 @@ class HotBarSlot(InvSlot):
 
         self.surf.blit(self.sprite,(0, 0))
 
+        label = self.font.render(str(self.amount), 1, (255, 255, 255))
+
         if self.select:
             self.selected()
+            if self.amount != 0:
+                self.surf.blit(label,( (self.scale / 10), (self.scale - (self.scale / 3))))
             self.draw_hot(surface)
 
         else:
             self.unselect()
+            if self.amount != 0:
+                self.surf.blit(label, ((self.scale / 9), (self.scale - (self.scale / 3))))
             self.draw_hot(surface)

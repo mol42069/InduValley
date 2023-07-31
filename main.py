@@ -29,6 +29,7 @@ def main():
     item_scale = 50
     save_name = "save1"
     pg.init()
+    pg.font.init()
 
     #MapGen() # <---- generate the temporary "Farm" Layout
 
@@ -38,10 +39,12 @@ def main():
     sprite_loader = SaveMng(scale=scale, entity_scale = entity_scale, item_scale=item_scale)
 
     cur_map = Map(sprite_loader, starting_map, save_name, scale)
-    player = Player(cur_map.player_start_pos, screen_size, sprite_loader, cur_map)
 
-    hot_pos = (690, 1027)
-    hot_bar = HotBar(sprite_loader, item_scale, hot_pos)
+    hot_size = (505, 56)
+    hot_pos = ((screen_size[0] - hot_size[0]) / 2, screen_size[1] - hot_size[1])
+    hot_bar = HotBar(sprite_loader, item_scale, hot_pos, hot_size)
+
+    player = Player(cur_map.player_start_pos, screen_size, sprite_loader, cur_map, hot_bar)
 
     screen_thread = threading.Thread(target=screen_threading, args=(root,player, screen_size, scale, cur_map, hot_bar,))
     screen_thread.start()
@@ -123,22 +126,10 @@ def main():
 def screen_threading(root, player, screen_size, scale, cur_map, hot_bar):
     global running
 
-    target_fps = 144
-    frame_t_time = 1000000000 / target_fps
-    s_time = time.time_ns()
-
     while running:
 
-        frame_time = time.time_ns() - s_time
-        if frame_time > frame_t_time:
-            s_time = time.time_ns()
-
-            cur_map.update(root, player, screen_size, scale)
-            hot_bar.update()
-
-        if frame_time != 0:
-            print(math.floor(1000000000 / frame_time))
-            pass
+        cur_map.update(root, player, screen_size, scale)
+        hot_bar.update()
 
 
 
