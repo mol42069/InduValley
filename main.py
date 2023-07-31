@@ -6,6 +6,7 @@ from resources.resource_loader import SaveMng
 from scripts.map import Map
 from scripts.player import Player
 from scripts import enums
+from scripts.Items.inventory import *
 # from resources.Maps.map_generator import MapGen
 import time
 
@@ -39,19 +40,24 @@ def main():
     cur_map = Map(sprite_loader, starting_map, save_name, scale)
     player = Player(cur_map.player_start_pos, screen_size, sprite_loader, cur_map)
 
-    screen_thread = threading.Thread(target=screen_threading, args=(root,player, screen_size, scale, cur_map,))
+    hot_pos = (690, 1027)
+    hot_bar = HotBar(sprite_loader, item_scale, hot_pos)
+
+    screen_thread = threading.Thread(target=screen_threading, args=(root,player, screen_size, scale, cur_map, hot_bar,))
     screen_thread.start()
+
 
     while running:
 
         cur_map.map.blit(player.sprite, (player.pos[enums.Cor.X.value], player.pos[enums.Cor.Y.value] - entity_scale))
         root.blit(cur_map.map, cur_map.pos)
+        hot_bar.draw(root)
 
-        root.blit(cur_map.hot_surf, cur_map.hot_pos)
 
         pg.display.update()
 
         for event in pg.event.get():
+
             match event.type:
                 case pg.QUIT:
                     running = False
@@ -77,6 +83,9 @@ def main():
 
                 case pg.MOUSEBUTTONUP:
                     pass
+
+                case pg.MOUSEWHEEL:
+                    hot_bar.scroll(event.y)     # we scroll through the hot-bar
 
         if key_pressed(pg.K_d):
             right = True
@@ -111,7 +120,7 @@ def main():
 
 
 
-def screen_threading(root, player, screen_size, scale, cur_map):
+def screen_threading(root, player, screen_size, scale, cur_map, hot_bar):
     global running
 
     target_fps = 144
@@ -125,6 +134,7 @@ def screen_threading(root, player, screen_size, scale, cur_map):
             s_time = time.time_ns()
 
             cur_map.update(root, player, screen_size, scale)
+            hot_bar.update()
 
         if frame_time != 0:
             print(math.floor(1000000000 / frame_time))

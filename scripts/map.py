@@ -18,24 +18,14 @@ class Map:
         self.player_start_pos = [500, 500]
         self.pos = [0, 0]
         self.prev_pos = self.pos
-        self.hot_bar = [None, None, None, None, None, None, None, None, None, None]
-        for i in range(0, 10):
-            if i % 3 == 0:
-                sprite = sprite_loader.get_env_sprite("Dirt")
-            elif i % 3 == 1:
-                sprite = sprite_loader.get_env_sprite("Stone")
-            else:
-                sprite = sprite_loader.get_env_sprite("Grass")
-
-            self.hot_bar[i] = InvTiles(sprite_loader, sprite, "Ta", 99)
 
         self.inventory = []
-        self.hot_surf = sprite_loader.get_bg_sprite("HotBar", (550, 50))
-        self.hot_pos = (685, 1030)
         self.last_hover = None
         self.hover_pos = [0, 0]
 
         self.reachable = None
+
+
 
     def load_map(self, map_name, scale=50):
 
@@ -74,7 +64,7 @@ class Map:
 
             self.map_tiles.append(col_tiles)
 
-    def draw(self, root, player, screen_size, scale=50):
+    def draw(self, root, player, screen_size):
 
         # we draw the player on the Surface "map"
 
@@ -101,7 +91,6 @@ class Map:
         else:
             self.pos[enums.Cor.Y.value] = math.floor(-(player.pos[enums.Cor.Y.value] - screen_size[enums.Cor.Y.value] / 2))
 
-        self.hot_bar_mng()
 
         # root.blit(self.map, self.pos)
         # root.blit(self.hot_surf, self.hot_pos)
@@ -134,7 +123,7 @@ class Map:
                 for y, row in enumerate(col):
                     row.draw_t(self.map)
 
-            root = self.draw(root, player, screen_size, scale)
+            root = self.draw(root, player, screen_size)
 
         return root
 
@@ -142,13 +131,3 @@ class Map:
 
 
         return
-
-    def hot_bar_mng(self):
-
-        self.hot_surf = self.sprite_loader.get_bg_sprite("HotBar", (550, 50))
-
-        for i in range(0, 10):
-            if self.hot_bar[i] is not None:
-                self.hot_surf.blit(self.hot_bar[i].sprite, ((10 + (50 * i) + (4 * (i - 1))), 4))
-
-        pass

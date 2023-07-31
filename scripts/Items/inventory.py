@@ -1,3 +1,6 @@
+from scripts.Items.invslots import *
+import pygame as pg
+
 class InvTiles:
 
     def __init__(self, sprite_loader, sprite, t_type, amount):
@@ -48,3 +51,61 @@ class Pickaxe(Tools):
 
 # TODO: we need add stuff for the other tools
 
+
+class Inventory:
+
+    def __init__(self, sprite_loader, scale):
+        self.sprite_loader = sprite_loader
+        self.scale = scale
+        self.items = [["Dirt:099", "Stone:001", "Grass:005", "None:000", "None:000", "None:000", "None:000", "None:000", "None:000", "None:000"]]
+        pass
+
+class HotBar(Inventory):
+
+    def __init__(self, sprite_loader, scale, hot_pos):
+        super().__init__(sprite_loader, scale)
+
+        self.hot_bar = [None, None, None, None, None, None, None, None, None, None]
+        self.hot_pos = hot_pos
+        self.sprite = sprite_loader.get_bg_sprite("HotBar", (505, 56))
+        self.surf = pg.Surface((self.sprite.get_width(), self.sprite.get_height()))
+
+        for i in range(0, 10):
+            if self.hot_bar[i] is None:
+                t_type = self.items[0][i]
+                amount = int(t_type[-3:])
+                t_type = t_type[:-4]
+
+                i_pos = [3 + (i * self.scale), 3]
+
+                self.hot_bar[i] = HotBarSlot(self.sprite_loader, self.scale , amount, t_type, i_pos)
+
+        self.selected = 0
+        self.hot_bar[self.selected].selected()
+
+    def scroll(self, amount):
+        self.selected += amount
+        if self.selected > 9:
+            self.selected = 0
+
+        elif self.selected < 0:
+            self.selected = 9
+
+        for x, hot_tile in enumerate(self.hot_bar):
+            if self.selected == x:
+                hot_tile.selected()
+
+            else:
+                hot_tile.unselect()
+
+
+    def update(self):
+        for x, hot_tile in enumerate(self.hot_bar):
+            if hot_tile.amount == 0:
+                hot_tile.type = None
+                self.items[0][x] = None
+
+            hot_tile.update(self.surf)
+
+    def draw(self, surface):
+        surface.blit(self.surf, self.hot_pos)
