@@ -105,7 +105,7 @@ class Player:
         pos[0] -= self.map.pos[0]
         pos[1] -= self.map.pos[1]
 
-        p_pos = (self.pos[0] + 25, self.pos[1] + 35)
+        p_pos = (self.pos[0] + (scale / 2), self.pos[1] + ((scale / 4) * 2))
 
         p_on_t = [math.floor(p_pos[0] / scale), math.floor(p_pos[1] / scale)]
 

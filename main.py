@@ -23,8 +23,9 @@ def main():
     global running
 
     starting_map = "Farm"
-    scale = 50
-    entity_scale = 50
+    scale = 80
+    entity_scale = 80
+    item_scale = 50
     save_name = "save1"
     pg.init()
 
@@ -33,7 +34,7 @@ def main():
     screen_size = (GetSystemMetrics(0), GetSystemMetrics(1))
     root = pg.display.set_mode(screen_size, pg.FULLSCREEN)
 
-    sprite_loader = SaveMng(scale=scale, entity_scale=50, item_scale=10)
+    sprite_loader = SaveMng(scale=scale, entity_scale = entity_scale, item_scale=item_scale)
 
     cur_map = Map(sprite_loader, starting_map, save_name, scale)
     player = Player(cur_map.player_start_pos, screen_size, sprite_loader, cur_map)
