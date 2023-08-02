@@ -86,6 +86,10 @@ class HotBar(Inventory):
         self.hot_bar[self.selected].selected()
 
     def scroll(self, amount):
+
+        # we just count which way and how much your scrolling and adding it to the selected variable. Then check that
+        # we are still in the range we need to be.
+
         self.selected += amount
         if self.selected > 9:
             self.selected = 0
@@ -102,6 +106,11 @@ class HotBar(Inventory):
 
 
     def update(self):
+
+        # we check that the items in the current hot-bar are the ones that should be there. And it hasn't been changed to
+        # another item in the inventory. Then we check that the amount isn't 0 because if it is there is no item in the
+        # slot so we "remove" it aka write "None:000" into the item slot.
+
         for x, hot_tile in enumerate(self.hot_bar):
             hot_tile.amount = int(self.items[0][x][-3:])
             hot_tile.type = str(self.items[0][x][:-4])
@@ -116,9 +125,15 @@ class HotBar(Inventory):
         surface.blit(self.surf, self.hot_pos)
 
     def get_item(self):
+
+        # we return the type of the item which is currently selected in the hot-bar
+
         return self.hot_bar[self.selected].type
 
     def item_used(self):
+
+        # we need to subtract the amount by 1 after we use an item. And add 0's so the slicing of the strings will work.
+
         self.hot_bar[self.selected].amount -= 1
         if int(self.hot_bar[self.selected].amount) > 99:
             self.items[0][self.selected] = self.items[0][self.selected][:-3] + str(self.hot_bar[self.selected].amount)

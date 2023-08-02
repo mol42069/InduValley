@@ -29,6 +29,8 @@ class Map:
 
     def load_map(self, map_name, scale=50):
 
+        # we load the current map from the resource loader which already loaded it from the files than we call the next function
+
         self.map_lst = self.sprite_loader.get_map(map_name)
         self.map = pg.Surface(((len(self.map_lst) - 1) * scale, len(self.map_lst[enums.Cor.X.value]) * scale))
 
@@ -38,10 +40,9 @@ class Map:
 
     def build_map(self, scale=50):
 
-        # init = self.map_lst[-1].pop()
-        # bg = init[1]
-        # self.player_start_pos = init[2]
-        # self.map.blit(self.sprite_loader.get_bg_sprite(bg, (self.map.get_width(), self.map.get_height())), (0, 0))
+        # we build the map out of the self.map_lst which is where all the tiles are stored for easier saving into a file
+        # but those entries are in string format. So we have to slice the information up and then convert them into the
+        # format we want to create tiles
 
         for x, col in enumerate(self.map_lst):
 
@@ -65,12 +66,8 @@ class Map:
             self.map_tiles.append(col_tiles)
 
     def draw(self, root, player, screen_size):
-
-        # we draw the player on the Surface "map"
-
-        #self.map.blit(player.sprite, (player.pos[enums.Cor.X.value] - (scale / 2), player.pos[enums.Cor.Y.value] - scale))
-
-        # we define where top_left of the Surface "map" should be
+        # we say where the map surface should be in correlation to the screen
+        # in accordance with the player position. (player should always be in the middle)
 
         if player.pos[enums.Cor.X.value] < screen_size[enums.Cor.X.value] / 2:
             self.pos[enums.Cor.X.value] = 0
@@ -100,6 +97,8 @@ class Map:
 
 
     def update(self, root, player, screen_size, scale=50):
+
+        # here we update the map surface and give the tile which is currently under our mouse a black outline.
 
         m_pos = pg.mouse.get_pos()
 

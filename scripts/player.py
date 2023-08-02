@@ -26,6 +26,8 @@ class Player:
 
     def animation(self):
 
+        # we change the sprite which is used by the player after an amount of time.
+
         if self.s_time + 0.06 < time.time():            # The float value here changes the animation speed
             self.s_time = time.time()
             self.ani_counter += 1
@@ -40,6 +42,10 @@ class Player:
         return
 
     def move(self, left, right, up, down, movement_x=0, movement_y=0):
+
+        # we save in which direction we are currently looking and then check if we are allowed to move where we want to
+        # go to. Call upon the animation() function. And we change the position(self.pos) so we fulfilled the movement if
+        # we are allowed to.
 
         if left:
             self.direction = enums.Direction.LEFT.value
@@ -60,7 +66,9 @@ class Player:
 
             self.animation()
 
-    def check_collision(self, movement_x, movement_y):         # add collision checks for stuff on the map
+    def check_collision(self, movement_x, movement_y):         # TODO: add collision checks for stuff on the map
+
+        # we check if the next movement is "legal" aka. we don't walk into anything solid.
 
         if self.pos[0] + movement_x > self.map.map.get_width() - 29 or self.pos[0] + movement_x < 50:
             return False
@@ -75,6 +83,9 @@ class Player:
         return
 
     def r_click(self, pos, scale):
+
+        # we get where we clicked on the screen and check if this is within a 3x3 area around the player if it is we
+        # change the sprite of the clicked tile for whatever is in the hot-bar selected slot.
 
         pos[0] -= self.map.pos[0]
         pos[1] -= self.map.pos[1]
@@ -102,6 +113,9 @@ class Player:
                         row.type = "Stone"
 
     def l_click(self, pos, scale):
+
+        # we get where we clicked on the screen and check if this is within a 3x3 area around the player if it is we
+        # change the sprite of the clicked tile for whatever is in the hot-bar selected slot.
 
         pos[0] -= self.map.pos[0]
         pos[1] -= self.map.pos[1]

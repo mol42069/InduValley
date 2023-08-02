@@ -8,6 +8,8 @@ class SaveMng:
     bg_sprites = {}
     maps = {}
 
+    # we load everything in our resources, so we can easily use them later without the need of loading them later
+
     def __init__(self, scale, entity_scale, item_scale, save_name = 'save1'):
 
         self.entity_sprites = {}

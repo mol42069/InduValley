@@ -52,12 +52,17 @@ def main():
 
     while running:
 
+        # we draw the player on the map surface then draw that surface on the root surface and at last we draw the hot-bar
+        # to the root surface.
+
         cur_map.map.blit(player.sprite, (player.pos[enums.Cor.X.value], player.pos[enums.Cor.Y.value] - entity_scale))
         root.blit(cur_map.map, cur_map.pos)
         hot_bar.draw(root)
 
 
         pg.display.update()
+
+        # we check for events and call r_click and l_click for the clicked mouse buttons.
 
         for event in pg.event.get():
 
@@ -90,6 +95,9 @@ def main():
                 case pg.MOUSEWHEEL:
                     hot_bar.scroll(event.y)     # we scroll through the hot-bar
 
+        # we poll for all the keys we need then according to what's pressed we call the move function with the corresponding
+        # variables.
+
         if key_pressed(pg.K_d):
             right = True
         else:
@@ -116,6 +124,8 @@ def main():
         elif down:
             player.move(left, right, up, down, 0, 3)
 
+        # we change the sprite to the standing sprite while the player isn't moving.
+
         if not right and not left and not up and not down:
             player.sprite = player.ani_sprites[player.direction][3]
             player.ani_counter = 3
@@ -124,6 +134,9 @@ def main():
 
 
 def screen_threading(root, player, screen_size, scale, cur_map, hot_bar):
+
+    # we want to run the updates in a separate thread, so we can get more fps.
+
     global running
 
     while running:
@@ -135,6 +148,8 @@ def screen_threading(root, player, screen_size, scale, cur_map, hot_bar):
 
 def esc_menu():
     global running
+
+    # whatever we do when "esc" is pressed.
 
     running = False
     exit()                      # TODO: here we need to make an escape menu !
