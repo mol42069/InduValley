@@ -127,8 +127,8 @@ def main():
         # we change the sprite to the standing sprite while the player isn't moving.
 
         if not right and not left and not up and not down:
-            player.sprite = player.ani_sprites[player.direction][3]
-            player.ani_counter = 3
+            player.cur_ani = player.idle_sprites[player.direction]
+            player.animation()
 
 
 

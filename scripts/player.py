@@ -10,10 +10,14 @@ class Player:
         self.screen_size = screen_size
         self.map = map_x
         self.sprite_loader = sprite_loader
-        self.ani_sprites = sprite_loader.get_ani("Player")
-        self.sprite = sprite_loader.get_entity_sprite("Player")
-        self.s_time = time.time()
+
         self.direction = enums.Direction.RIGHT.value
+        self.ani_sprites = sprite_loader.get_ani("Player")
+        self.idle_sprites = sprite_loader.get_ani("IdlePlayer")
+        self.cur_ani = self.idle_sprites[self.direction]
+        self.sprite = self.cur_ani[0]
+
+        self.s_time = time.time()
         self.hot_bar = hot_bar
 
         return
@@ -28,16 +32,16 @@ class Player:
 
         # we change the sprite which is used by the player after an amount of time.
 
-        if self.s_time + 0.06 < time.time():            # The float value here changes the animation speed
+        if self.s_time + 0.07 < time.time():            # The float value here changes the animation speed
             self.s_time = time.time()
             self.ani_counter += 1
 
-            if self.ani_counter < len(self.ani_sprites[self.direction]):
-                self.sprite = self.ani_sprites[self.direction][self.ani_counter]
+            if self.ani_counter < len(self.cur_ani):
+                self.sprite = self.cur_ani[self.ani_counter]
 
             else:
                 self.ani_counter = 0
-                self.sprite = self.ani_sprites[self.direction][self.ani_counter]
+                self.sprite = self.cur_ani[self.ani_counter]
 
         return
 
@@ -63,6 +67,8 @@ class Player:
         if self.check_collision(movement_x, movement_y):
             self.pos[0] += movement_x
             self.pos[1] += movement_y
+
+            self.cur_ani = self.ani_sprites[self.direction]
 
             self.animation()
 
