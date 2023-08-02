@@ -1,72 +1,61 @@
 from scripts.Items.invslots import *
 import pygame as pg
 
-class InvTiles:
-
-    def __init__(self, sprite_loader, sprite, t_type, amount):
-        self.sprite = sprite
-        self.t_type = t_type
-        self.amount = amount
-        self.sprite_loader = sprite_loader
-        self.exist = True
-
-    def draw(self, surface, pos):
-        surface.blit(self.sprite, pos)
-
-    def use(self, tile):
-        tile.sprite = self.sprite
-        if self.amount == 0:
-            self.exist = False
-
-
-class Weapons(InvTiles):
-
-    def __init__(self, sprite_loader, sprite, t_type, cooldown):
-        super().__init__(sprite_loader, sprite, t_type, 1)
-        self.cooldown = cooldown
-
-    def use(self, tile):
-        pass  # TODO: here we need to add attacking but first we need to add enemies
-
-    def block(self):
-        pass  # TODO: same as above but just with blocking
-
-
-class Tools(InvTiles):
-
-    def __init__(self, sprite_loader, sprite, t_type, speed):
-        super().__init__(sprite_loader, sprite, t_type, 1)
-        self.speed = speed
-
-
-class Pickaxe(Tools):
-
-    def __init__(self, sprite_loader, sprite, t_type, speed):
-        super().__init__(sprite_loader, sprite, t_type, speed)
-
-    def use(self, tile):
-
-        if tile.type == "Stone":
-            tile.sprite = self.sprite_loader.get_env_sprite("Dirt")
-
-# TODO: we need add stuff for the other tools
-
 
 class Inventory:
 
-    def __init__(self, sprite_loader, scale):
+    def __init__(self, sprite_loader, scale, pos, inv_size):
         self.sprite_loader = sprite_loader
         self.scale = scale
+        self.pos = pos
         self.items = [["Dirt:099", "Stone:001", "Grass:005", "None:000", "None:000", "None:000", "None:000", "None:000", "None:000", "None:000"]]
-        pass
+        self.inv_tiles = []
+        if inv_size != (0, 0):
+            self.bg = sprite_loader.get_bg_sprite("Inventory", inv_size)
+        for i in range(1,3):
+            temp_row = []
+            for j in range(0, 10):
+                temp_row.append("None:000")
+            self.items.append(temp_row)
+
+        for x, row in enumerate(self.items):
+            temp_row = []
+
+            for y, tile in enumerate(row):
+                amount = tile[-3:]
+                t_type = tile[:-4]
+                pos = ((10 + x * self.scale), (10 + x * self.scale))
+                temp_tile = InvSlot(self.sprite_loader, self.scale, amount, t_type, pos)
+                temp_row.append(temp_tile)
+
+            self.inv_tiles.append(temp_row)
+
+
+    def i_update(self, surface):
+
+        for x, row in enumerate(self.inv_tiles):
+            for y, inv_tile in enumerate(row):
+                inv_tile.amount = int(self.items[x][y][-3:])
+                inv_tile.type = str(self.items[x][y][:-4])
+
+                if inv_tile.amount == 0:
+                    self.items[x][y] = "None:000"
+
+                inv_tile.update(surface)
+
+    def draw(self, surface):
+
+        for row in self.inv_tiles:
+            for tile in row:
+                tile.draw(surface)
+
 
 class HotBar(Inventory):
 
-    def __init__(self, sprite_loader, scale, hot_pos, hot_size):
-        super().__init__(sprite_loader, scale)
+    def __init__(self, sprite_loader, scale, pos, hot_size):
+        super().__init__(sprite_loader, scale, pos, inv_size=(0, 0))
         self.hot_size = hot_size
         self.hot_bar = [None, None, None, None, None, None, None, None, None, None]
-        self.hot_pos = hot_pos
         self.sprite = sprite_loader.get_bg_sprite("HotBar", self.hot_size)
         self.surf = pg.Surface((self.sprite.get_width(), self.sprite.get_height()))
 
@@ -122,7 +111,7 @@ class HotBar(Inventory):
             hot_tile.update(self.surf)
 
     def draw(self, surface):
-        surface.blit(self.surf, self.hot_pos)
+        surface.blit(self.surf, self.pos)
 
     def get_item(self):
 

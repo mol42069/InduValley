@@ -26,6 +26,22 @@ class InvSlot:
     def draw(self, surface):
         surface.blit(self.surf, self.pos)
 
+    def update(self, surface):                                          # we update the contends and draw the corresponding sprites to the hot-bar surface
+
+        if self.type is None:
+            self.sprite = self.sprite_loader.get_item_sprite("EmptyInv")
+
+        elif self.type == "None":
+            self.sprite = self.sprite_loader.get_item_sprite("EmptyInv")
+
+        else:
+            self.sprite = self.sprite_loader.get_item_sprite(self.type)
+
+        self.surf.blit(self.sprite,(0, 0))
+
+        label = self.font.render(str(self.amount), 1, (255, 255, 255))
+        self.surf.blit(label, ((self.scale / 10), (self.scale - (self.scale / 3))))
+
 
 class HotBarSlot(InvSlot):
 

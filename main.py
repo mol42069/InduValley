@@ -31,6 +31,8 @@ def main():
     pg.init()
     pg.font.init()
 
+    inv_o = False
+
     #MapGen() # <---- generate the temporary "Farm" Layout
 
     screen_size = (GetSystemMetrics(0), GetSystemMetrics(1))
@@ -39,6 +41,11 @@ def main():
     sprite_loader = SaveMng(scale=scale, entity_scale = entity_scale, item_scale=item_scale)
 
     cur_map = Map(sprite_loader, starting_map, save_name, scale)
+
+    inv_size = (1040, 440)
+    inv_pos = ((screen_size[0] - inv_size[0]) / 2, (screen_size[1] - inv_size[1]))
+    inventory = Inventory(sprite_loader, scale, inv_pos, inv_size)
+    inv_surf = pg.Surface( inv_size)
 
     hot_size = (505, 56)
     hot_pos = ((screen_size[0] - hot_size[0]) / 2, screen_size[1] - hot_size[1])
@@ -58,6 +65,11 @@ def main():
         cur_map.map.blit(player.sprite, (player.pos[enums.Cor.X.value], player.pos[enums.Cor.Y.value] - entity_scale))
         root.blit(cur_map.map, cur_map.pos)
         hot_bar.draw(root)
+        if inv_o:
+            inventory.i_update(inv_surf)
+            inv_surf.blit(inventory.bg, (0, 0))
+            inventory.draw(inv_surf)
+            root.blit(inv_surf, inventory.pos)
 
 
         pg.display.update()
@@ -75,6 +87,9 @@ def main():
                     match event.key:
                         case pg.K_ESCAPE:
                             esc_menu()
+
+                        case pg.K_TAB:
+                            inv_o = not inv_o
 
                 case pg.MOUSEBUTTONDOWN:
                     if pg.mouse.get_pressed()[2]:
@@ -143,7 +158,6 @@ def screen_threading(root, player, screen_size, scale, cur_map, hot_bar):
 
         cur_map.update(root, player, screen_size, scale)
         hot_bar.update()
-
 
 
 def esc_menu():
