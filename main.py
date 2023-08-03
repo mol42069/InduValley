@@ -12,6 +12,7 @@ import time
 
 grey = (50, 50, 50)
 running = True
+items =  None
 
 def key_pressed(input_key):
     keys_pressed = pg.key.get_pressed()
@@ -21,7 +22,7 @@ def key_pressed(input_key):
         return False
 
 def main():
-    global running
+    global running, items
 
     starting_map = "Farm"
     scale = 80
@@ -42,14 +43,14 @@ def main():
 
     cur_map = Map(sprite_loader, starting_map, save_name, scale)
 
-    inv_size = (1040, 440)
-    inv_pos = ((screen_size[0] - inv_size[0]) / 2, (screen_size[1] - inv_size[1]))
-    inventory = Inventory(sprite_loader, scale, inv_pos, inv_size)
-    inv_surf = pg.Surface( inv_size)
+    inv_size = (520, 230)
+    inv_pos = ((screen_size[0] - inv_size[0]) / 2, (screen_size[1] - inv_size[1]) / 2)
+    inventory = Inventory(sprite_loader, item_scale, inv_pos, inv_size)
+    items = inventory.items
 
     hot_size = (505, 56)
     hot_pos = ((screen_size[0] - hot_size[0]) / 2, screen_size[1] - hot_size[1])
-    hot_bar = HotBar(sprite_loader, item_scale, hot_pos, hot_size)
+    hot_bar = HotBar(sprite_loader, item_scale, hot_pos, hot_size, items)
 
     player = Player(cur_map.player_start_pos, screen_size, sprite_loader, cur_map, hot_bar)
 
@@ -66,10 +67,9 @@ def main():
         root.blit(cur_map.map, cur_map.pos)
         hot_bar.draw(root)
         if inv_o:
-            inventory.i_update(inv_surf)
-            inv_surf.blit(inventory.bg, (0, 0))
-            inventory.draw(inv_surf)
-            root.blit(inv_surf, inventory.pos)
+            inventory.i_update(items)
+            inventory.draw()
+            root.blit(inventory.surf, inventory.pos)
 
 
         pg.display.update()
@@ -91,18 +91,61 @@ def main():
                         case pg.K_TAB:
                             inv_o = not inv_o
 
+                        case pg.K_1:
+                            hot_bar.key_scroll(0)
+
+                        case pg.K_2:
+                            hot_bar.key_scroll(1)
+
+                        case pg.K_3:
+                            hot_bar.key_scroll(2)
+
+                        case pg.K_4:
+                            hot_bar.key_scroll(3)
+
+                        case pg.K_5:
+                            hot_bar.key_scroll(4)
+
+                        case pg.K_6:
+                            hot_bar.key_scroll(5)
+
+                        case pg.K_7:
+                            hot_bar.key_scroll(6)
+
+                        case pg.K_8:
+                            hot_bar.key_scroll(7)
+
+                        case pg.K_9:
+                            hot_bar.key_scroll(8)
+
+                        case pg.K_0:
+                            hot_bar.key_scroll(9)
+
                 case pg.MOUSEBUTTONDOWN:
                     if pg.mouse.get_pressed()[2]:
 
                         mouse_pos = pg.mouse.get_pos()
                         m_pos = [mouse_pos[0], mouse_pos[1]]
-                        player.r_click(m_pos, scale)
+                        if inv_o:
+                            if not inventory.rect.collidepoint(m_pos):
+                                player.r_click(m_pos, scale)
+                            else:
+                                pass            # TODO: Mouse in Inventory function must be called
+                        else:
+                            player.r_click(m_pos, scale)
 
                     elif pg.mouse.get_pressed()[0]:
 
                         mouse_pos = pg.mouse.get_pos()
                         m_pos = [mouse_pos[0], mouse_pos[1]]
-                        player.l_click(m_pos, scale)
+
+                        if inv_o:
+                            if not inventory.rect.collidepoint(m_pos):
+                                player.l_click(m_pos, scale)
+                            else:
+                                pass            # TODO: Mouse in Inventory function must be called
+                        else:
+                            player.l_click(m_pos, scale)
 
                 case pg.MOUSEBUTTONUP:
                     pass
@@ -157,7 +200,7 @@ def screen_threading(root, player, screen_size, scale, cur_map, hot_bar):
     while running:
 
         cur_map.update(root, player, screen_size, scale)
-        hot_bar.update()
+        hot_bar.update(items)
 
 
 def esc_menu():

@@ -2,7 +2,7 @@ from scripts import enums
 import pygame as pg
 class Tile:
 
-    def __init__(self, sprite, pos, type):
+    def __init__(self, sprite, pos, t_type):
 
         self.sprite = sprite
         self.pos = pos
@@ -11,7 +11,7 @@ class Tile:
         self.surf.blit(self.sprite,(0, 0))
         self.rect.topleft = pos
         self.tillable = False
-        self.type = type
+        self.type = t_type
 
 
     def draw(self, root):
@@ -38,9 +38,9 @@ class Tile:
 
 class TillAble(Tile):
 
-    def __init__(self, sprite, pos, type):
+    def __init__(self, sprite, pos, t_type):
 
-        super().__init__(sprite, pos, type)
+        super().__init__(sprite, pos, t_type)
         self.tillable = True
         self.tilled = False
         self.crop_type = None

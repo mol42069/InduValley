@@ -31,16 +31,14 @@ class InvSlot:
         if self.type is None:
             self.sprite = self.sprite_loader.get_item_sprite("EmptyInv")
 
-        elif self.type == "None":
-            self.sprite = self.sprite_loader.get_item_sprite("EmptyInv")
-
         else:
             self.sprite = self.sprite_loader.get_item_sprite(self.type)
 
         self.surf.blit(self.sprite,(0, 0))
 
-        label = self.font.render(str(self.amount), 1, (255, 255, 255))
-        self.surf.blit(label, ((self.scale / 10), (self.scale - (self.scale / 3))))
+        if self.amount != 0:
+            label = self.font.render(str(self.amount), 1, (255, 255, 255))
+            self.surf.blit(label, ((self.scale / 10), (self.scale - (self.scale / 2) + 5)))
 
 
 class HotBarSlot(InvSlot):
