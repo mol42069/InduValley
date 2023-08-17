@@ -2,7 +2,7 @@ from scripts import enums
 import pygame as pg
 class Tile:
 
-    def __init__(self, sprite, pos, t_type):
+    def __init__(self, sprite, pos, t_type,buildable=True, walkable=False):
 
         self.sprite = sprite
         self.pos = pos
@@ -12,10 +12,11 @@ class Tile:
         self.rect.topleft = pos
         self.tillable = False
         self.type = t_type
-
+        self.walkable = walkable
+        self.buildable = buildable
 
     def draw(self, root):
-
+        self.surf.blit(self.sprite, (0, 0))
         root.blit(self.surf, self.pos)
 
         return root
@@ -29,7 +30,15 @@ class Tile:
 
         return False
 
+    def build(self, walkable, sprite):     #TODO: later we must add variables so we can interact with stuff
+
+        self.walkable = walkable
+        self.sprite = sprite
+        self.buildable = False
+
+
     def draw_t(self, surf):
+        self.surf.blit(self.sprite, (0, 0))
         surf.blit(self.surf, (self.pos[0], self.pos[1]))
 
         return

@@ -144,13 +144,9 @@ class Player:
         for col in temp_tiles:
             for row in col:
                 if row.rect.collidepoint((pos[0], pos[1])):
-                    if row.tillable:
-                        sprite = self.hot_bar.get_item()
-                        if sprite is not None:
-                            if row.type != sprite:
-                                row.surf.blit(self.sprite_loader.get_env_sprite(sprite), (0, 0))
-                                row.type = sprite
-                                self.hot_bar.item_used()
+
+                    self.hot_bar.hot_bar[self.hot_bar.selected].left_click(row)
+
 
     def update_inv(self):
 

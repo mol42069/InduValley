@@ -11,7 +11,7 @@ class Inventory:
         self.rect = self.surf.get_rect()
         self.rect.topleft = pos
         self.pos = pos
-        self.items = [["Dirt:099", "Stone:001", "Grass:005", "None:000", "None:000", "None:000", "None:000", "None:000", "None:000", "None:000"]]
+        self.items = [["Dirt:pa:099", "Stone:pa:001", "Grass:pa:005", "None:na:000", "None:na:000", "None:na:000", "None:na:000", "None:na:000", "None:na:000", "None:na:000"]]
         self.inv_tiles = []
         if inv_size != (0, 0):
             self.bg = sprite_loader.get_bg_sprite("Inventory", inv_size)
@@ -29,7 +29,7 @@ class Inventory:
                 if y == 0:
 
                     amount = tile[-3:]
-                    t_type = tile[:-4]
+                    t_type = tile[:-7]
 
                     if t_type == "None":
                         t_type = None
@@ -42,7 +42,7 @@ class Inventory:
                 else:
 
                     amount = tile[-3:]
-                    t_type = tile[:-4]
+                    t_type = tile[:-7]
 
                     if t_type == "None":
                         t_type = None
@@ -54,6 +54,13 @@ class Inventory:
 
             self.inv_tiles.append(temp_row)
 
+    def inv_l_click(self, m_pos):
+
+        pass
+
+    def inv_l_click_release(self):
+
+        pass
 
     def i_update(self, items):
 
@@ -78,7 +85,7 @@ class Inventory:
 
         return self.items
 
-    def draw(self):
+    def draw(self, surface):
 
         for row in self.inv_tiles:
             for tile in row:
@@ -100,6 +107,7 @@ class HotBar(Inventory):
             if self.hot_bar[i] is None:
                 t_type = self.items[0][i]
                 amount = int(t_type[-3:])
+                t_type = t_type[-6:]
                 t_type = t_type[:-4]
                 if t_type == "None":
                     t_type = None

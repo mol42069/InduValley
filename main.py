@@ -62,7 +62,6 @@ def main():
 
         # we draw the player on the map surface then draw that surface on the root surface and at last we draw the hot-bar
         # to the root surface.
-
         cur_map.map.blit(player.sprite, (player.pos[enums.Cor.X.value], player.pos[enums.Cor.Y.value] - entity_scale))
         root.blit(cur_map.map, cur_map.pos)
         hot_bar.draw(root)
@@ -122,19 +121,24 @@ def main():
                             hot_bar.key_scroll(9)
 
                 case pg.MOUSEBUTTONDOWN:
-                    if pg.mouse.get_pressed()[2]:
+                    if pg.mouse.get_pressed()[2]:           # <- Right-click
 
                         mouse_pos = pg.mouse.get_pos()
                         m_pos = [mouse_pos[0], mouse_pos[1]]
+
                         if inv_o:
                             if not inventory.rect.collidepoint(m_pos):
                                 player.r_click(m_pos, scale)
+
                             else:
-                                pass            # TODO: Mouse in Inventory function must be called
+
+                                Inventory.inv_l_click(m_pos=mouse_pos)
+
+
                         else:
                             player.r_click(m_pos, scale)
 
-                    elif pg.mouse.get_pressed()[0]:
+                    elif pg.mouse.get_pressed()[0]:       # <- Left-click
 
                         mouse_pos = pg.mouse.get_pos()
                         m_pos = [mouse_pos[0], mouse_pos[1]]
@@ -142,13 +146,16 @@ def main():
                         if inv_o:
                             if not inventory.rect.collidepoint(m_pos):
                                 player.l_click(m_pos, scale)
+
                             else:
                                 pass            # TODO: Mouse in Inventory function must be called
+
                         else:
                             player.l_click(m_pos, scale)
 
                 case pg.MOUSEBUTTONUP:
-                    pass
+                    if pg.mouse.get_pressed()[0]:
+                        inventory.inv_l_click_release()
 
                 case pg.MOUSEWHEEL:
                     hot_bar.scroll(event.y)     # we scroll through the hot-bar
@@ -158,27 +165,37 @@ def main():
 
         if key_pressed(pg.K_d):
             right = True
+
         else:
             right = False
+
         if key_pressed(pg.K_a):
             left = True
+
         else:
             left = False
+
         if key_pressed(pg.K_w):
             up = True
+
         else:
             up = False
+
         if key_pressed(pg.K_s):
             down = True
+
         else:
             down = False
 
         if left:
             player.move(left, right, up, down, -3, 0)
+
         elif right:
             player.move(left, right, up, down, 3, 0)
+
         if up:
             player.move(left, right, up, down, 0, -3)
+
         elif down:
             player.move(left, right, up, down, 0, 3)
 
