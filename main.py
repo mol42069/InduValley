@@ -1,7 +1,7 @@
 import math
 import threading
 import pygame as pg
-import copy
+from copy import deepcopy
 from win32api import GetSystemMetrics
 from resources.resource_loader import SaveMng
 from scripts.map import Map
@@ -207,26 +207,17 @@ def disp(root, screen_size, sprite_loader):
 
     global running, cur_map, player, entity_scale, hot_bar, inv_o, inventory, exit_o, exit_rec, exit_sprite
 
-    fps = 0
-    s_time = time.time_ns()
-
     exit_rec = exit_sprite.get_rect()
     exit_rec.topleft = (50, 500)
 
     while running:
 
-        if time.time_ns() - s_time > 1000000000:
-            s_time = time.time_ns()
-            print(fps)
-            fps = 0
-
-        fps += 1
         root = cur_map.draw(root, player, screen_size)
 
         p_map = copy(cur_map)
         p_map.map.blit(player.sprite, (player.pos[enums.Cor.X.value], player.pos[enums.Cor.Y.value] - entity_scale))
 
-        root.blit(p_map.map, p_map.pos)
+        root.blit(p_map.map, cur_map.pos)
         hot_bar.draw(root)
 
         if inv_o:
@@ -271,6 +262,7 @@ def esc_menu(root, sprite_loader):
                 case pg.KEYDOWN:
                     match event.key:
                         case pg.K_ESCAPE:
+                            #TODO: here we have to save the worlds and inventory and stuff
                             exit_o = False
                             return
 
@@ -285,6 +277,8 @@ def esc_menu(root, sprite_loader):
                 case pg.MOUSEMOTION:
                     if exit_rec.collidepoint(pg.mouse.get_pos()):
                         exit_sprite = sprite_loader.get_bg_sprite('ExitButtonHover',(200, 75))
+                    else:
+                        exit_sprite = sprite_loader.get_bg_sprite('ExitButton', (200, 75))
 
 
 
