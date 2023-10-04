@@ -1,5 +1,6 @@
 import math
 import threading
+import copy
 import pygame as pg
 from win32api import GetSystemMetrics
 from resources.resource_loader import SaveMng
@@ -13,6 +14,12 @@ import time
 grey = (50, 50, 50)
 running = True
 items =  None
+cur_map = None
+player = None
+entity_scale = None
+hot_bar = None
+inv_o = None
+inventory = None
 
 def key_pressed(input_key):
     keys_pressed = pg.key.get_pressed()
@@ -21,8 +28,9 @@ def key_pressed(input_key):
     else:
         return False
 
+
 def main():
-    global running, items
+    global running, items, cur_map, player, entity_scale, hot_bar, inv_o, inventory
 
     starting_map = "Farm"
     scale = 80
@@ -31,7 +39,6 @@ def main():
     save_name = "save1"
     pg.init()
     pg.font.init()
-
     inv_o = False
 
     #MapGen() # <---- generate the temporary "Farm" Layout
@@ -54,24 +61,26 @@ def main():
 
     player = Player(cur_map.player_start_pos, screen_size, sprite_loader, cur_map, hot_bar)
 
-    screen_thread = threading.Thread(target=screen_threading, args=(root,player, screen_size, scale, cur_map, hot_bar,))
+    screen_thread = threading.Thread(target=screen_threading, args=(root, screen_size, scale,))
     screen_thread.start()
-
+    disp = threading.Thread(target=disp_funk, args=(root, ))
+    disp.start()
 
     while running:
 
         # we draw the player on the map surface then draw that surface on the root surface and at last we draw the hot-bar
         # to the root surface.
-        cur_map.map.blit(player.sprite, (player.pos[enums.Cor.X.value], player.pos[enums.Cor.Y.value] - entity_scale))
-        root.blit(cur_map.map, cur_map.pos)
-        hot_bar.draw(root)
-        if inv_o:
-            inventory.i_update(items)
-            inventory.draw()
-            root.blit(inventory.surf, inventory.pos)
 
+        #cur_map.map.blit(player.sprite, (player.pos[enums.Cor.X.value], player.pos[enums.Cor.Y.value] - entity_scale))
+        #root.blit(cur_map.map, cur_map.pos)
+        #hot_bar.draw(root)
+        #if inv_o:
+        #    inventory.i_update(items)
+        #    inventory.draw()
+        #    root.blit(inventory.surf, inventory.pos)
 
-        pg.display.update()
+        #pg.display.update()
+        pg.time.delay(50)
 
         # we check for events and call r_click and l_click for the clicked mouse buttons.
 
@@ -133,7 +142,6 @@ def main():
                             else:
 
                                 Inventory.inv_l_click(m_pos=mouse_pos)
-
 
                         else:
                             player.r_click(m_pos, scale)
@@ -205,14 +213,30 @@ def main():
             player.cur_ani = player.idle_sprites[player.direction]
             player.animation()
 
+def disp_funk(root):
+
+    global running, cur_map, player, entity_scale, hot_bar, inv_o, inventory
+
+    while running:
+
+        p_map = copy(cur_map)
+        p_map.map.blit(player.sprite, (player.pos[enums.Cor.X.value], player.pos[enums.Cor.Y.value] - entity_scale))
+
+        root.blit(p_map.map, p_map.pos)
+        hot_bar.draw(root)
+        if inv_o:
+            inventory.i_update(items)
+            inventory.draw()
+            root.blit(inventory.surf, inventory.pos)
+
+        pg.display.update()
 
 
-
-def screen_threading(root, player, screen_size, scale, cur_map, hot_bar):
+def screen_threading(root, screen_size, scale):
 
     # we want to run the updates in a separate thread, so we can get more fps.
 
-    global running
+    global running, cur_map, player, hot_bar
 
     while running:
 
