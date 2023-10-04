@@ -122,7 +122,7 @@ class Map:
                 for y, row in enumerate(col):
                     row.draw_t(self.map)
 
-            root = self.draw(root, player, screen_size)
+            #root = self.draw(root, player, screen_size)
 
         return root
 

@@ -21,8 +21,3 @@ class Direction(Enum):
     RIGHT = 2
     LEFT = 1
 
-class ItemTypes(Enum):          # Here we add the types of items
-    Tree = 'Tree'
-    Path = 'Path'
-    Floor = 'Floor'
-    Tool = 'Tool'

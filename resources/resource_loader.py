@@ -41,10 +41,8 @@ class SaveMng:
         return self.ani[name]
 
     def get_item_sprite(self, item_name = ""):
-        try:
-            return self.item_sprites[item_name]
-        except KeyError:
-            return self.item_sprites[item_name[:-3]]
+
+        return self.item_sprites[item_name]
 
     def get_env_sprite(self, env_name = ""):
 
