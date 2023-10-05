@@ -38,13 +38,13 @@ def key_pressed(input_key):
         return False
 
 def main():
-    global running, items, cur_map, player, entity_scale, hot_bar, inv_o, inventory, sprite_loader
+    global running, items, cur_map, player, entity_scale, hot_bar, inv_o, inventory, sprite_loader, filename
 
     starting_map = "Farm"
     scale = 80
     entity_scale = 80
     item_scale = 50
-    save_name = "save1"
+    save_name = filename
     pg.init()
     pg.font.init()
 
@@ -63,15 +63,18 @@ def main():
 
     inventory = Inventory(sprite_loader, item_scale, inv_pos, inv_size)
 
-    inventory.load(filename)                # TODO: change so that we can create a new inventory on a new world...
-
+    player_pos = inventory.load(filename)[0]                # TODO: change so that we can create a new inventory on a new world...
+    p_pos = [float(player_pos[0]), float(player_pos[1])]
     items = inventory.items
+
+    print(p_pos)
 
     hot_size = (505, 56)
     hot_pos = ((screen_size[0] - hot_size[0]) / 2, screen_size[1] - hot_size[1])
     hot_bar = HotBar(sprite_loader, item_scale, hot_pos, hot_size, items)
 
     player = Player(cur_map.player_start_pos, screen_size, sprite_loader, cur_map, hot_bar)
+    player.teleport(p_pos)                                  # same as with inventory load...
 
     screen_thread = threading.Thread(target=screen_threading, args=(root,player, screen_size, scale, cur_map, hot_bar,))
     screen_thread.start()
@@ -256,7 +259,7 @@ def screen_threading(root, player, screen_size, scale, cur_map, hot_bar):
 
 def esc_menu(root, sprite_loader):
 
-    global running, exit_rec, exit_o, exit_sprite, cur_map, filename
+    global running, exit_rec, exit_o, exit_sprite, cur_map, filename, player
 
     # whatever we do when "esc" is pressed.
     exit_o = True
@@ -270,7 +273,7 @@ def esc_menu(root, sprite_loader):
             match event.type:
                 case pg.QUIT:
                     cur_map.save_map()
-                    inventory.save(filename)
+                    inventory.save(filename, player)
                     running = False
                     exit()
 
@@ -286,7 +289,7 @@ def esc_menu(root, sprite_loader):
                         if exit_rec.collidepoint(pg.mouse.get_pos()):
                             exit_sprite = sprite_loader.get_bg_sprite('ExitButtonClick', (200, 75))
                             cur_map.save_map()
-                            inventory.save(filename)
+                            inventory.save(filename, player)
                             pg.time.delay(50)
                             running = False
                             exit()

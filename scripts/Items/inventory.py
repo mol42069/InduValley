@@ -55,17 +55,22 @@ class Inventory:
             self.inv_tiles.append(temp_row)
 
 
-    def save(self, filename):
+    def save(self, filename, player):
 
-        save.save(self.items, filename, 'Player')
+        data = [[player.pos[0], player.pos[1]]]
+
+        for row in self.items:
+            data.append(row)
+
+        save.save(data, filename, 'Player')
 
         return
 
     def load(self, filename):
+        data =  save.load(filename, 'Player')
+        self.items = data[1:]
 
-        self.items = save.load(filename, 'Player')
-
-        return
+        return data[:1]
     def i_update(self, items):
 
         self.items = items
