@@ -71,7 +71,7 @@ def main():
     screen_thread = threading.Thread(target=screen_threading, args=(root,player, screen_size, scale, cur_map, hot_bar,))
     screen_thread.start()
 
-    disp_thread = threading.Thread(target=disp, args=(root, screen_size, sprite_loader,))
+    disp_thread = threading.Thread(target=disp, args=(root, screen_size,))
     disp_thread.start()
 
 
@@ -200,7 +200,7 @@ def main():
 
 
 
-def disp(root, screen_size, sprite_loader):
+def disp(root, screen_size):
 
     # here we draw everything in a different thread... so we can run with more fps...
     # ... at least I hope
@@ -209,15 +209,22 @@ def disp(root, screen_size, sprite_loader):
 
     exit_rec = exit_sprite.get_rect()
     exit_rec.topleft = (50, 500)
+    fps = 0
+    s_time = time.time_ns()
 
     while running:
+        if time.time_ns() - s_time > 1000000000:
+            print(fps)
+            s_time= time.time_ns()
+            fps = 0
+
+        fps += 1
 
         root = cur_map.draw(root, player, screen_size)
 
-        p_map = copy(cur_map)
-        p_map.map.blit(player.sprite, (player.pos[enums.Cor.X.value], player.pos[enums.Cor.Y.value] - entity_scale))
+        cur_map.map.blit(player.sprite, (player.pos[enums.Cor.X.value], player.pos[enums.Cor.Y.value] - entity_scale))
 
-        root.blit(p_map.map, cur_map.pos)
+        root.blit(cur_map.map, cur_map.pos)
         hot_bar.draw(root)
 
         if inv_o:
@@ -243,7 +250,7 @@ def screen_threading(root, player, screen_size, scale, cur_map, hot_bar):
 
 
 def esc_menu(root, sprite_loader):
-    global running, exit_rec, exit_o, exit_sprite
+    global running, exit_rec, exit_o, exit_sprite, cur_map
 
     # whatever we do when "esc" is pressed.
     exit_o = True
@@ -256,6 +263,7 @@ def esc_menu(root, sprite_loader):
 
             match event.type:
                 case pg.QUIT:
+                    cur_map.save_map()
                     running = False
                     exit()
 
@@ -270,6 +278,7 @@ def esc_menu(root, sprite_loader):
                     if pg.mouse.get_pressed()[0]:
                         if exit_rec.collidepoint(pg.mouse.get_pos()):
                             exit_sprite = sprite_loader.get_bg_sprite('ExitButtonClick', (200, 75))
+                            cur_map.save_map()
                             pg.time.delay(50)
                             running = False
                             exit()

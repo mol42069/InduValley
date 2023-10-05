@@ -153,9 +153,8 @@ class SaveMng:
 
     def load_maps(self, save_name):                            # we load map build
 
-        path = "./Maps/" + save_name
                                                             # TODO: load a map after save map
-        self.maps.update({'Farm' : save.load("save1", "Farm")})
+        self.maps.update({'Farm' : save.load(save_name, "Farm")})
 
         return
 

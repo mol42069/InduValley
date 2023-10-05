@@ -1,5 +1,6 @@
 import math
 from scripts.block import *
+from scripts.save import save
 import pygame as pg
 from scripts.Items.inventory import *
 
@@ -13,6 +14,7 @@ class Map:
         self.map = None
 
         self.load_map(map_name, scale)
+        self.map_name = map_name
         self.save_name = save_name
         self.scale = scale
         self.player_start_pos = [500, 500]
@@ -33,8 +35,32 @@ class Map:
 
         self.map_lst = self.sprite_loader.get_map(map_name)
         self.map = pg.Surface(((len(self.map_lst) - 1) * scale, len(self.map_lst[enums.Cor.X.value]) * scale))
-
+        self.map_name = map_name
         self.build_map(scale)
+
+        return
+
+    def save_map(self):
+
+        data = []
+
+        for x, col in enumerate(self.map_tiles):
+            temp = []
+            for tile in col:
+                if tile.tillable:
+                    temp_str = tile.type + ':Ta'
+                else:
+                    temp_str = tile.type + ':nT'
+
+                temp.append(temp_str)
+
+            if x == 1:
+                data[0] = temp
+
+            else:
+                data.append(temp)
+
+        save(data, self.save_name, self.map_name)
 
         return
 
@@ -88,7 +114,7 @@ class Map:
         else:
             self.pos[enums.Cor.Y.value] = math.floor(-(player.pos[enums.Cor.Y.value] - screen_size[enums.Cor.Y.value] / 2))
 
-
+        # self.update(root, player, screen_size)
         # root.blit(self.map, self.pos)
         # root.blit(self.hot_surf, self.hot_pos)
         #pg.display.update()
