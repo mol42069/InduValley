@@ -125,8 +125,10 @@ class Map:
 
         for x in range(3):
             for y in range(3):
-                self.map = self.map_tiles[math.floor(player.pos[0]/self.scale) + x][math.floor(player.pos[1]/self.scale) + (y-1)].draw_t(self.map)
-
+                try:
+                    self.map = self.map_tiles[math.floor(player.pos[0]/self.scale) + x][math.floor(player.pos[1]/self.scale) + (y-1)].draw_t(self.map)
+                except IndexError:
+                    pass
 
     def update(self, root, player, screen_size, scale=50):
 
