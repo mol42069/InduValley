@@ -1,8 +1,7 @@
 import math
-from scripts.block import *
-from scripts.save import save
-import pygame as pg
 from scripts.Items.inventory import *
+from scripts.block import *
+
 
 class Map:
 
@@ -60,7 +59,7 @@ class Map:
             else:
                 data.append(temp)
 
-        save(data, self.save_name, self.map_name)
+        save.save(data, self.save_name, self.map_name)
 
         return
 
@@ -118,8 +117,15 @@ class Map:
         # root.blit(self.map, self.pos)
         # root.blit(self.hot_surf, self.hot_pos)
         #pg.display.update()
+        self.replace_player(player)
 
         return root
+
+    def replace_player(self, player):
+
+        for x in range(3):
+            for y in range(3):
+                self.map = self.map_tiles[math.floor(player.pos[0]/self.scale) + x][math.floor(player.pos[1]/self.scale) + (y-1)].draw_t(self.map)
 
 
     def update(self, root, player, screen_size, scale=50):

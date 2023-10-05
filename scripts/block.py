@@ -25,14 +25,16 @@ class Tile:
         player_rect = player.get_rect()
 
         if player_rect.collidepoint(self.rect):
+
             return True
 
         return False
 
     def draw_t(self, surf):
+
         surf.blit(self.surf, (self.pos[0], self.pos[1]))
 
-        return
+        return surf
 
 
 
@@ -41,6 +43,7 @@ class TillAble(Tile):
     def __init__(self, sprite, pos, t_type):
 
         super().__init__(sprite, pos, t_type)
+
         self.tillable = True
         self.tilled = False
         self.crop_type = None
@@ -89,7 +92,3 @@ class TillAble(Tile):
         else:
 
             return
-
-
-
-

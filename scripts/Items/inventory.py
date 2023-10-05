@@ -1,5 +1,6 @@
 from scripts.Items.invslots import *
 import pygame as pg
+from scripts import save
 
 
 class Inventory:
@@ -11,15 +12,14 @@ class Inventory:
         self.rect = self.surf.get_rect()
         self.rect.topleft = pos
         self.pos = pos
-        self.items = [["Dirt:099", "Stone:001", "Grass:005", "None:000", "None:000", "None:000", "None:000", "None:000", "None:000", "None:000"]]
+        self.items = [["Dirt:099", "Stone:001", "Grass:005", "None:000", "None:000", "None:000", "None:000", "None:000", "None:000", "None:000"],
+                      ["Dirt:099", "Stone:001", "Grass:005", "None:000", "None:000", "None:000", "None:000", "None:000", "None:000", "None:000"],
+                      ["Dirt:099", "Stone:001", "Grass:005", "None:000", "None:000", "None:000", "None:000", "None:000", "None:000", "None:000"],
+                      ["Dirt:099", "Stone:001", "Grass:005", "None:000", "None:000", "None:000", "None:000", "None:000", "None:000", "None:000"]]
+
         self.inv_tiles = []
         if inv_size != (0, 0):
             self.bg = sprite_loader.get_bg_sprite("Inventory", inv_size)
-        for i in range(1,4):
-            temp_row = []
-            for j in range(0, 10):
-                temp_row.append("None:000")
-            self.items.append(temp_row)
 
         for y, row in enumerate(self.items):
             temp_row = []
@@ -55,6 +55,17 @@ class Inventory:
             self.inv_tiles.append(temp_row)
 
 
+    def save(self, filename):
+
+        save.save(self.items, filename, 'Player')
+
+        return
+
+    def load(self, filename):
+
+        self.items = save.load(filename, 'Player')
+
+        return
     def i_update(self, items):
 
         self.items = items

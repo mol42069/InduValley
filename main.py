@@ -22,6 +22,7 @@ inv_o=None
 inventory=None
 exit_o = False
 exit_rec = None
+filename = 'save1'
 scale = 80
 entity_scale = 80
 item_scale = 50
@@ -59,7 +60,11 @@ def main():
 
     inv_size = (520, 230)
     inv_pos = ((screen_size[0] - inv_size[0]) / 2, (screen_size[1] - inv_size[1]) / 2)
+
     inventory = Inventory(sprite_loader, item_scale, inv_pos, inv_size)
+
+    inventory.load(filename)                # TODO: change so that we can create a new inventory on a new world...
+
     items = inventory.items
 
     hot_size = (505, 56)
@@ -250,7 +255,8 @@ def screen_threading(root, player, screen_size, scale, cur_map, hot_bar):
 
 
 def esc_menu(root, sprite_loader):
-    global running, exit_rec, exit_o, exit_sprite, cur_map
+
+    global running, exit_rec, exit_o, exit_sprite, cur_map, filename
 
     # whatever we do when "esc" is pressed.
     exit_o = True
@@ -264,6 +270,7 @@ def esc_menu(root, sprite_loader):
             match event.type:
                 case pg.QUIT:
                     cur_map.save_map()
+                    inventory.save(filename)
                     running = False
                     exit()
 
@@ -279,6 +286,7 @@ def esc_menu(root, sprite_loader):
                         if exit_rec.collidepoint(pg.mouse.get_pos()):
                             exit_sprite = sprite_loader.get_bg_sprite('ExitButtonClick', (200, 75))
                             cur_map.save_map()
+                            inventory.save(filename)
                             pg.time.delay(50)
                             running = False
                             exit()
