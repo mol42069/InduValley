@@ -55,9 +55,9 @@ class Inventory:
             self.inv_tiles.append(temp_row)
 
 
-    def save(self, filename, player):
+    def save(self, filename, player, map_name):
 
-        data = [[player.pos[0], player.pos[1]]]
+        data = [[player.pos[0], player.pos[1], map_name]]
 
         for row in self.items:
             data.append(row)
