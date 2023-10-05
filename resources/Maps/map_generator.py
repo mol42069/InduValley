@@ -286,6 +286,6 @@ class MapGen:
 
                     ]
 
-        save.save(self.map, "save1", "Farm")
+        save.save(self.map, 'save1', "Market")
 
         return

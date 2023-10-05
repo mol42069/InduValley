@@ -153,8 +153,13 @@ class SaveMng:
 
     def load_maps(self, save_name):                            # we load map build
 
+
                                                             # TODO: load a map after save map
-        self.maps.update({'Farm' : save.load(save_name, "Farm")})
+        #self.maps.update({'Farm' : save.load(save_name, "Farm")})
+
+        for m in os.listdir('./resources/Maps/'+ str(save_name) + '/'):
+
+            self.maps.update({str(m[:-4]) : save.load(save_name, str(m[:-4]))})
 
         return
 

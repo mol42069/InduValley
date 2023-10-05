@@ -8,7 +8,7 @@ from scripts.map import Map
 from scripts.player import Player
 from scripts import enums
 from scripts.Items.inventory import *
-# from resources.Maps.map_generator import MapGen
+from resources.Maps.map_generator import MapGen
 import time
 
 grey = (50, 50, 50)
